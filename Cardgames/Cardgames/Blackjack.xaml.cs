@@ -57,29 +57,29 @@ namespace Cardgames
         private void Player1Game()
         {
             player1 = new Player("Player 1", 0, 20, 0, 0);
+            TurnRotation(1);
         }
-
         private void Player2Game()
         {
             player1 = new Player("Player 1", 0, 20, 0, 0);
             player2 = new Player("Player 2", 0, 20, 0, 0);
+            TurnRotation(2);
         }
-
         private void Player3Game()
         {
             player1 = new Player("Player 1", 0, 20, 0, 0);
             player2 = new Player("Player 2", 0, 20, 0, 0);
             player3 = new Player("Player 3", 0, 20, 0, 0);
+            TurnRotation(3);
         }
-
         private void Player4Game()
         {
             player1 = new Player("Player 1", 0, 20, 0, 0);
             player2 = new Player("Player 2", 0, 20, 0, 0);
             player3 = new Player("Player 3", 0, 20, 0, 0);
             player4 = new Player("Player 4", 0, 20, 0, 0);
+            TurnRotation(4);
         }
-
         private void Player5Game()
         {
             player1 = new Player("Player 1", 0, 20, 0, 0);
@@ -87,6 +87,85 @@ namespace Cardgames
             player3 = new Player("Player 3", 0, 20, 0, 0);
             player4 = new Player("Player 4", 0, 20, 0, 0);
             player5 = new Player("Player 5", 0, 20, 0, 0);
+            TurnRotation(5);
+        }
+        private void TurnRotation(int turns)
+        {
+            int counter = 0;
+            if(turns == 1)
+            {
+                Console.WriteLine("player 1 turn");
+            } else if(turns == 2)
+            {
+                if(counter % turns == 0)
+                {
+                    Console.WriteLine("player 1 turn");
+                    counter++;
+                } else
+                {
+                    Console.WriteLine("player 2 turn");
+                    counter++;
+                }
+            } else if(turns == 3)
+            {
+                if(counter % turns == 0)
+                {
+                    Console.WriteLine("player 1 turn");
+                    counter++;
+                } else if(counter % turns == 1)
+                {
+                    Console.WriteLine("player 2 turn");
+                    counter++;
+                }else
+                {
+                    Console.WriteLine("player 3 turn");
+                    counter++;
+                }
+            } else if(turns == 4)
+            {
+                if(counter % turns == 0)
+                {
+                    Console.WriteLine("player 1 turn");
+                    counter++;
+                } else if(counter % turns == 1)
+                {
+                    Console.WriteLine("player 2 turn");
+                    counter++;
+                } else if(counter % turns == 2)
+                {
+                    Console.WriteLine("player 3 turn");
+                    counter++;
+                } else
+                {
+                    Console.WriteLine("player 4 turn");
+                    counter++;
+                }
+            } else
+            {
+                if (counter % turns == 0)
+                {
+                    Console.WriteLine("player 1 turn");
+                    counter++;
+                }
+                else if (counter % turns == 1)
+                {
+                    Console.WriteLine("player 2 turn");
+                    counter++;
+                }
+                else if (counter % turns == 2)
+                {
+                    Console.WriteLine("player 3 turn");
+                    counter++;
+                } else if(counter % turns == 3)
+                {
+                    Console.WriteLine("plaer 4 turn");
+                    counter++;
+                }else
+                {
+                    Console.WriteLine("player 5 turn");
+                    counter++;
+                }
+            }
         }
     }
 }

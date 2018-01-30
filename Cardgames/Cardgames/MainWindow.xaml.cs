@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Cardgames.Classes;
 
 namespace Cardgames
 {
@@ -23,6 +24,7 @@ namespace Cardgames
         public MainWindow()
         {
             InitializeComponent();
+            DeckFillTest();
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
@@ -66,5 +68,9 @@ namespace Cardgames
             int number = AmountOfPlayersBlack.SelectedIndex;
             //call to page
         }
-    }
+        public void DeckFillTest()
+         {
+             Deck deck = new Deck();
+        }
+}
 }

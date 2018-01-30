@@ -8,13 +8,24 @@ namespace Cardgames.Classes
 {
     public class Card
     {
-        private CardSuits suit;
+        private CardSuit suit;
 
-        public CardSuits Suit
+        public CardSuit Suit
         {
             get { return suit; }
             set { suit = value; }
         }
+        private CardValue faceValue;
 
+        public CardValue FaceValue
+        {
+            get { return faceValue; }
+            set { faceValue = value; }
+        }
+        public Card(CardSuit suit, CardValue faceValue)
+        {
+            this.Suit = suit;
+            this.FaceValue = faceValue;
+        }
     }
 }

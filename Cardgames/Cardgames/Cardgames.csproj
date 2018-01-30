@@ -54,6 +54,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Blackjack.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -62,9 +66,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Blackjack.xaml.cs">
+      <DependentUpon>Blackjack.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Classes\BlackJackDealer.cs" />
     <Compile Include="Classes\Card.cs" />
-    <Compile Include="Classes\CardSuits.cs" />
+    <Compile Include="Classes\CardSuit.cs" />
+    <Compile Include="Classes\CardValue.cs" />
+    <Compile Include="Classes\Deck.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -72,7 +81,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -97,6 +105,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\black_scales.png" />
+    <Resource Include="Images\brushed_alu.png" />
+    <Resource Include="Images\light_wool.png" />
+    <Resource Include="Images\light_wool_green.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

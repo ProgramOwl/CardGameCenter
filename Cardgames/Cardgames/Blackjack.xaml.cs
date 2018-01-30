@@ -20,6 +20,16 @@ namespace Cardgames
     /// </summary>
     public partial class Blackjack : Window
     {
+        public Player player1;
+        public Player player2;
+        public Player player3;
+        public Player player4;
+        public Player player5;
+        public bool player1Bet = false;
+        public bool player2Bet = false;
+        public bool player3Bet = false;
+        public bool player4Bet = false;
+        public bool player5Bet = false;
         public Blackjack()
         {
             InitializeComponent();
@@ -46,37 +56,37 @@ namespace Cardgames
         }
         private void Player1Game()
         {
-            Player player1 = new Player("Player 1", 0, 20, 0, 0);
+            player1 = new Player("Player 1", 0, 20, 0, 0);
         }
 
         private void Player2Game()
         {
-            Player player1 = new Player("Player 1", 0, 20, 0, 0);
-            Player player2 = new Player("Player 2", 0, 20, 0, 0);
+            player1 = new Player("Player 1", 0, 20, 0, 0);
+            player2 = new Player("Player 2", 0, 20, 0, 0);
         }
 
         private void Player3Game()
         {
-            Player player1 = new Player("Player 1", 0, 20, 0, 0);
-            Player player2 = new Player("Player 2", 0, 20, 0, 0);
-            Player player3 = new Player("Player 3", 0, 20, 0, 0);
+            player1 = new Player("Player 1", 0, 20, 0, 0);
+            player2 = new Player("Player 2", 0, 20, 0, 0);
+            player3 = new Player("Player 3", 0, 20, 0, 0);
         }
 
         private void Player4Game()
         {
-            Player player1 = new Player("Player 1", 0, 20, 0, 0);
-            Player player2 = new Player("Player 2", 0, 20, 0, 0);
-            Player player3 = new Player("Player 3", 0, 20, 0, 0);
-            Player player4 = new Player("Player 4", 0, 20, 0, 0);
+            player1 = new Player("Player 1", 0, 20, 0, 0);
+            player2 = new Player("Player 2", 0, 20, 0, 0);
+            player3 = new Player("Player 3", 0, 20, 0, 0);
+            player4 = new Player("Player 4", 0, 20, 0, 0);
         }
 
         private void Player5Game()
         {
-            Player player1 = new Player("Player 1", 0, 20, 0, 0);
-            Player player2 = new Player("Player 2", 0, 20, 0, 0);
-            Player player3 = new Player("Player 3", 0, 20, 0, 0);
-            Player player4 = new Player("Player 4", 0, 20, 0, 0);
-            Player player5 = new Player("Player 5", 0, 20, 0, 0);
+            player1 = new Player("Player 1", 0, 20, 0, 0);
+            player2 = new Player("Player 2", 0, 20, 0, 0);
+            player3 = new Player("Player 3", 0, 20, 0, 0);
+            player4 = new Player("Player 4", 0, 20, 0, 0);
+            player5 = new Player("Player 5", 0, 20, 0, 0);
         }
     }
 }

@@ -111,6 +111,59 @@ namespace Cardgames
                 if(counter % turns == 0)
                 {
                     Console.WriteLine("player 1 turn");
+                    counter++;
+                } else if(counter % turns == 1)
+                {
+                    Console.WriteLine("player 2 turn");
+                    counter++;
+                }else
+                {
+                    Console.WriteLine("player 3 turn");
+                    counter++;
+                }
+            } else if(turns == 4)
+            {
+                if(counter % turns == 0)
+                {
+                    Console.WriteLine("player 1 turn");
+                    counter++;
+                } else if(counter % turns == 1)
+                {
+                    Console.WriteLine("player 2 turn");
+                    counter++;
+                } else if(counter % turns == 2)
+                {
+                    Console.WriteLine("player 3 turn");
+                    counter++;
+                } else
+                {
+                    Console.WriteLine("player 4 turn");
+                    counter++;
+                }
+            } else
+            {
+                if (counter % turns == 0)
+                {
+                    Console.WriteLine("player 1 turn");
+                    counter++;
+                }
+                else if (counter % turns == 1)
+                {
+                    Console.WriteLine("player 2 turn");
+                    counter++;
+                }
+                else if (counter % turns == 2)
+                {
+                    Console.WriteLine("player 3 turn");
+                    counter++;
+                } else if(counter % turns == 3)
+                {
+                    Console.WriteLine("plaer 4 turn");
+                    counter++;
+                }else
+                {
+                    Console.WriteLine("player 5 turn");
+                    counter++;
                 }
             }
         }

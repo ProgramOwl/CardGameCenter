@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Cardgames
 {
     /// <summary>
@@ -67,7 +68,7 @@ namespace Cardgames
         }
         public void DeckFillTest()
         {
-            Deck tempDeck = new Deck();
+            Deck deck = new Deck();
         }
     }
 }

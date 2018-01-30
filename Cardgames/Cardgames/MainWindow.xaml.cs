@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cardgames.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Cardgames
         public MainWindow()
         {
             InitializeComponent();
+            DeckFillTest();
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
@@ -62,6 +64,10 @@ namespace Cardgames
         {
             int number = AmountOfPlayersBlack.SelectedIndex;
             //call to page
+        }
+        public void DeckFillTest()
+        {
+            Deck tempDeck = new Deck();
         }
     }
 }

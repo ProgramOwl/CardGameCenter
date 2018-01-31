@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Cardgames.UserControlsi.CardDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cardgames.UserControlsi"
+             mc:Ignorable="d" 
+             d:DesignHeight="252" d:DesignWidth="180">
+    <StackPanel Orientation="Horizontal">
+        <!--<StackPanel.Resources>
+            <Style  TargetType="Image">
+                <Setter Property="Label.Height" Value="30"/>
+                <Setter Property="Label.FontWeight" Value="ExtraBold"/>
+                <Setter Property="Label.FontSize" Value="14"/>
+                <Setter Property="Label.VerticalContentAlignment" Value="Center"/>
+            </Style>
+        </StackPanel.Resources>-->
+        <!--<ComboBox x:Name="PhoneNumberTypesListXX" SelectedIndex="0" SelectedItem="{Binding ImageTypeX}"/>
+        <ComboBoxItem>-->
+            <Image Source="{Binding CardFace}" Width="180" Height="252"/>
+        <!--</ComboBoxItem>-->
+    </StackPanel>
+</UserControl>

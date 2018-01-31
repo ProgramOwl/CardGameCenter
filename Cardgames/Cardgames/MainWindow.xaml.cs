@@ -61,6 +61,7 @@ namespace Cardgames
             int number = AmountOfPlayersGo.SelectedIndex;
             //call to page
             //return 
+            new GoFish {DataContext=number}.Show();
         }
 
         private void StartBlackJackButton_Click(object sender, RoutedEventArgs e)

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Cardgames.Classes;
 
 namespace Cardgames
 {
@@ -22,6 +23,14 @@ namespace Cardgames
         public GoFish()
         {
             InitializeComponent();
+        }
+
+        public void MatchingCards(Card x, Card y)
+        {
+            if (x.FaceValue == y.FaceValue)
+            {
+                
+            }
         }
     }
 }

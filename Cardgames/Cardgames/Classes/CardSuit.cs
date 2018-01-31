@@ -10,7 +10,7 @@ namespace Cardgames.Classes
     {
         Hearts,
         Diamonds,
-        Spade,
-        Club
+        Spades,
+        Clubs
     }
 }

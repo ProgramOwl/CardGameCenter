@@ -85,18 +85,19 @@ namespace Cardgames.Classes
                 cardFace = cardFaceUp ? CardImage : CardBack;
             }
         }
-        public Card(CardSuit suit, CardValue faceValue)//, bool isFaceUp)
+        public Card(CardSuit suit, CardValue faceValue, bool isFaceUp)
         {
             this.Suit = suit;
             this.FaceValue = faceValue;
-            
-            //string suit2 = suit.Substring(0, 1).ToUpper() + suit.Substring(1, suit.Length - 2).ToLower();
-            //    this.cardName = ValueToCard(value) + " of " + suit2;
-            //    this.cardFaceUp = isFaceUp;
-            //    this.CardBack = "/Images/Cards/CardBack.png";
-            //    this.CardImage = "/Images/Cards/" + ImageNameFormat(suit2, value) + ".png";
-            //    this.cardFace = cardFaceUp ? CardImage : CardBack;
-            //}
+            this.CardFaceUp = isFaceUp;
+            string suitStringRaw = suit.ToString();
+            string suitString = suitStringRaw.Substring(0, 1).ToUpper() + suitStringRaw.Substring(1, suitStringRaw.Length - 2).ToLower();
+            int faceValueInt = (int)this.FaceValue;
+            this.cardName = ValueToCard(faceValueInt) + " of " + suitString;
+            this.cardFaceUp = isFaceUp;
+            this.CardBack = "/Images/Cards/CardBack.png";
+            this.CardImage = "/Images/Cards/" + ImageNameFormat(suitString, faceValueInt) + ".png";
+            this.cardFace = cardFaceUp ? CardImage : CardBack;
         }
     }
 }

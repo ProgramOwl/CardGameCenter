@@ -34,7 +34,6 @@ namespace Cardgames
         public GoFish()
         {
             InitializeComponent();
-            Setup();
             DeckSetup();
         }
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -68,14 +67,10 @@ namespace Cardgames
             OpponentOption2Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +2);
             OpponentOption3Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +3);
         }
-        private void Setup()
+        public void Setup(int playerNum)
         {
-            //private ObservableCollection<Player> Players;
-            // ObservableCollection<Player> Players = new ObservableCollection<Player>();
-            //Create players
-            //(inside) Create:  
-            //ObservableCollection<ImageCard> ImageCards = new ObservableCollection<ImageCard>();
-            //create cards
+            NumberOfPlayers = playerNum;
+            //testing purpose
             ImageCard[] cardsI = new ImageCard[6];
             cardsI[0] = new ImageCard("club", 5, true);
             cardsI[1] = new ImageCard("heart", 12, true);

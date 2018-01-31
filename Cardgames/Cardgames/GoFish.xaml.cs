@@ -58,13 +58,13 @@ namespace Cardgames
             PlayerListBox.SelectedIndex = (PlayerListBox.SelectedIndex + 1) % NumberOfPlayers;
             CurrentPlayerLabel.Content = "Player " + (PlayerListBox.SelectedIndex + 1) + "'s Trun";
             UpDateOpponentSelector();
-        }            
+        }
         private void UpDateOpponentSelector()
         {
-            int PlayerNumber = PlayerListBox.SelectedIndex+1;
-            OpponentOption1Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +1);
-            OpponentOption2Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +2);
-            OpponentOption3Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +3);
+            int PlayerNumber = PlayerListBox.SelectedIndex + 1;
+            OpponentOption1Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) + 1);
+            OpponentOption2Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) + 2);
+            OpponentOption3Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) + 3);
         }
         public void Setup(int playerNum)
         {
@@ -79,7 +79,7 @@ namespace Cardgames
             cardsI[5] = new ImageCard("spade", 4, false);
 
             Playerv2[] Players = new Playerv2[NumberOfPlayers];
-            for(int i=0; i<NumberOfPlayers; i++)
+            for (int i = 0; i < NumberOfPlayers; i++)
             {
                 Players[i] = new Playerv2("Player " + i, cardsI);
             }
@@ -101,7 +101,8 @@ namespace Cardgames
             {
                 player3Stats.Visibility = Visibility.Visible;
                 player4Stats.Visibility = Visibility.Collapsed;
-            } else if (numberOfPlayers == 4)
+            }
+            else if (numberOfPlayers == 4)
             {
                 player3Stats.Visibility = Visibility.Visible;
                 player4Stats.Visibility = Visibility.Visible;
@@ -112,13 +113,15 @@ namespace Cardgames
             if (numberOfPlayers == 2)
             {
                 OpponentSelector.Visibility = Visibility.Collapsed;
-            } else if (numberOfPlayers == 3)
+            }
+            else if (numberOfPlayers == 3)
             {
                 OpponentSelector.Visibility = Visibility.Visible;
                 OpponentOption1.Visibility = Visibility.Visible;
                 OpponentOption2.Visibility = Visibility.Visible;
                 OpponentOption3.Visibility = Visibility.Collapsed;
-            } else if (numberOfPlayers == 4)
+            }
+            else if (numberOfPlayers == 4)
             {
                 OpponentSelector.Visibility = Visibility.Visible;
                 OpponentOption1.Visibility = Visibility.Visible;
@@ -165,120 +168,119 @@ namespace Cardgames
 
         private void Player2Game()
         {
-            player1 = new Player("Player 1", 5, 0, 0, 0);
-            player2 = new Player("Player 2", 5, 0, 0, 0);
+            player1 = new Player("Player 1", new Card[5], 0, 0, 0);
+            player2 = new Player("Player 2", new Card[5], 0, 0, 0);
             //TurnRotation(2);               
         }
         private void Player3Game()
         {
-            player1 = new Player("Player 1", 5, 0, 0, 0);
-            player2 = new Player("Player 2", 5, 0, 0, 0);
-            player3 = new Player("Player 3", 5, 0, 0, 0);
-
-            //TurnRotation(3);               
+            player1 = new Player("Player 1", new Card[5], 0, 0, 0);
+            player2 = new Player("Player 2", new Card[5], 0, 0, 0);
+            player3 = new Player("Player 3", new Card[5], 0, 0, 0);
         }
-        private void Player4Game()
-        {
-            player1 = new Player("Player 1", 5, 0, 0, 0);
-            player2 = new Player("Player 2", 5, 0, 0, 0);
-            player3 = new Player("Player 3", 5, 0, 0, 0);
-            player4 = new Player("Player 4", 5, 0, 0, 0);
-
-            //TurnRotation(4);               
-        }
-
-        /// <summary>
-        ///Called if player/cpu does not get a match on their turn
-        /// </summary>
-        public void DrawACard()
-        {
-            // call nextCard()
-            nextCard(player1);
-            //Add the taken card and add it to the players hand based on current player's turn
-
-
-            //call TurnSwitch()
-
-        }
-        /// <summary>
-        /// Called by DrawACard(), removes next card object from the deck
-        /// </summary>
-        public void nextCard(Player player)
-        {
-            //check if the deck is empty
-            //if empty call endGame()???
-            //else remove next card in the deck
-            if (goFishDeck.Cards.Length > 0)
+            private void Player4Game()
             {
-                getNextCards(player, 1);
-                //player.CardHand.Add(cards.First());
-            }
-            else
-            {
-                //endGame();
+                player1 = new Player("Player 1", new Card[5], 0, 0, 0);
+                player2 = new Player("Player 2", new Card[5], 0, 0, 0);
+                player3 = new Player("Player 3", new Card[5], 0, 0, 0);
+                player4 = new Player("Player 4", new Card[5], 0, 0, 0);
+
+                //TurnRotation(4);               
             }
 
-        }
-        /// <summary>
-        /// Should set up a players hands with cards.
-        /// </summary>
-        public void initialPlayerHand()
-        {
-            switch (numOfPlayers)
+            /// <summary>
+            ///Called if player/cpu does not get a match on their turn
+            /// </summary>
+            public void DrawACard()
             {
-                case 2:
-                    getNextCards(player1, 5);
+                // call nextCard()
+                nextCard(player1);
+                //Add the taken card and add it to the players hand based on current player's turn
 
-                    getNextCards(player2, 5);
 
-                    break;
+                //call TurnSwitch()
 
-                case 3:
-                    getNextCards(player1, 5);
-                    getNextCards(player2, 5);
-                    getNextCards(player3, 5);
-
-                    break;
-                case 4:
-                    getNextCards(player1, 5);
-                    getNextCards(player2, 5);
-                    getNextCards(player3, 5);
-                    getNextCards(player4, 5);
-
-                    break;
             }
-
-            //populate player hand with the correct amount of cards
-
-        }
-
-        public void getNextCards(Player player, int numOfCards)
-        {
-            for (int i = 0; i < numOfCards; i++)
+            /// <summary>
+            /// Called by DrawACard(), removes next card object from the deck
+            /// </summary>
+            public void nextCard(Player player)
             {
-                if (goFishDeck.Cards[i] != null)
+                //check if the deck is empty
+                //if empty call endGame()???
+                //else remove next card in the deck
+                if (goFishDeck.Cards.Length > 0)
                 {
-                    //player.CardHand[i] = goFishDeck.Cards[currIndex];
-                    currIndex ++;
+                    getNextCards(player, 1);
+                    //player.CardHand.Add(cards.First());
                 }
+                else
+                {
+                    //endGame();
+                }
+
+            }
+            /// <summary>
+            /// Should set up a players hands with cards.
+            /// </summary>
+            public void initialPlayerHand()
+            {
+                switch (numOfPlayers)
+                {
+                    case 2:
+                        getNextCards(player1, 5);
+
+                        getNextCards(player2, 5);
+
+                        break;
+
+                    case 3:
+                        getNextCards(player1, 5);
+                        getNextCards(player2, 5);
+                        getNextCards(player3, 5);
+
+                        break;
+                    case 4:
+                        getNextCards(player1, 5);
+                        getNextCards(player2, 5);
+                        getNextCards(player3, 5);
+                        getNextCards(player4, 5);
+
+                        break;
+                }
+
+                //populate player hand with the correct amount of cards
+
             }
 
-            //removeCards(5);
+            public void getNextCards(Player player, int numOfCards)
+            {
+                for (int i = 0; i < numOfCards; i++)
+                {
+                    if (goFishDeck.Cards[i] != null)
+                    {
+                        //player.CardHand[i] = goFishDeck.Cards[currIndex];
+                        currIndex++;
+                    }
+                }
+
+                //removeCards(5);
+            }
+
+
+
+
+            //public void removeCards(int num)
+            //{
+            //    if (cards != null)
+            //    {
+            //        cards.RemoveRange(0, num);
+            //    }
+            //}
+
         }
-
-
-
-
-        //public void removeCards(int num)
-        //{
-        //    if (cards != null)
-        //    {
-        //        cards.RemoveRange(0, num);
-        //    }
-        //}
-
     }
-}
+
 //for (int i = 0; i < 5; i++)
 //{
 //    //player1.PlayerHand[i] = goFishDeck.Cards[i];

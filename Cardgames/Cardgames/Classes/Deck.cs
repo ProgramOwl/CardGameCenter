@@ -8,16 +8,16 @@ namespace Cardgames.Classes
 {
     public class Deck
     {
-        private Card[] cards;
+        private List<Card> cards;
 
-        public Card[] Cards
+        public List<Card> Cards
         {
             get { return cards; }
             set { cards = value; }
         }
         public void FillDeck()
         {
-            cards = new Card[52];
+            cards = new List<Card>();
             CardValue[] ranks = (CardValue[])Enum.GetValues(typeof(CardValue));
             CardSuit[] suits = (CardSuit[])Enum.GetValues(typeof(CardSuit));
             Card tempCard;
@@ -32,13 +32,13 @@ namespace Cardgames.Classes
                 }
             }
         }
-        public Card[] ShuffleDeck()
+        public List<Card> ShuffleDeck()
         {
 
             Random r = new Random();
-            for(int i = 0; i < Cards.Length - 1; i++)
+            for(int i = 0; i < Cards.Count - 1; i++)
             {
-                int j = r.Next(i, Cards.Length);
+                int j = r.Next(i, Cards.Count);
                 Card tempCard = Cards[i];
                 Cards[i] = Cards[j];
                 Cards[j] = tempCard;

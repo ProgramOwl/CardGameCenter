@@ -46,6 +46,10 @@ namespace Cardgames.Classes
 
             return Cards;
         }
+        //public Card[] Deal(Deck deck, string gameMode, bool isFirstDeal, int numOfPlayers)
+        //{
+
+        //}
         public Deck()
         {
             FillDeck();

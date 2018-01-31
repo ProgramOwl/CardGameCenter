@@ -15,14 +15,12 @@ namespace Cardgames
         public int bet { get; set; }
         public int PlayerBank { get; set; }
         public int GoFishCounter { get; set; }
-        public int BlackjackScore { get; set; }
         public Player(string name, Card[] hand, int bank, int fishScore, int bljScore)
         {
             Name = name;
             PlayerHand = hand;
             PlayerBank = bank;
             GoFishCounter = fishScore;
-            BlackjackScore = bljScore;
         }
     }
 }

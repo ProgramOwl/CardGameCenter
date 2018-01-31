@@ -1,5 +1,4 @@
-﻿using Cardgames.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Cardgames.Classes;
 
 namespace Cardgames
 {
@@ -44,6 +44,7 @@ namespace Cardgames
         {
             HomeTextPage.Visibility = Visibility.Collapsed;
             BlackJackForm.Visibility = Visibility.Collapsed;
+            subTitle.Content = "Go Fish Game";
             GoFishForm.Visibility = Visibility.Visible;
         }
 
@@ -51,6 +52,7 @@ namespace Cardgames
         {
             HomeTextPage.Visibility = Visibility.Collapsed;
             GoFishForm.Visibility = Visibility.Collapsed;
+            subTitle.Content = "Black Jack Game";
             BlackJackForm.Visibility = Visibility.Visible;
         }
 
@@ -58,6 +60,8 @@ namespace Cardgames
         {
             int number = AmountOfPlayersGo.SelectedIndex;
             //call to page
+            //return 
+            new GoFish {DataContext=number}.Show();
         }
 
         private void StartBlackJackButton_Click(object sender, RoutedEventArgs e)
@@ -66,8 +70,8 @@ namespace Cardgames
             //call to page
         }
         public void DeckFillTest()
-        {
-            Deck tempDeck = new Deck();
+         {
+             Deck deck = new Deck();
         }
-    }
+}
 }

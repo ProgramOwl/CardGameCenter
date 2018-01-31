@@ -6,26 +6,22 @@ using System.Threading.Tasks;
 
 namespace Cardgames.Classes
 {
-    public class Card
+    class ImageCard
     {
-        private CardSuit suit;
         private string cardName;
         private string CardImage;
         private string CardBack;
         private string cardFace;
         private bool cardFaceUp;
 
-        public CardSuit Suit
+        public ImageCard(string suit, int value, bool isFaceUp)
         {
-            get { return suit; }
-            set { suit = value; }
-        }
-        private CardValue faceValue;
-
-        public CardValue FaceValue
-        {
-            get { return faceValue; }
-            set { faceValue = value; }
+            string suit2 = suit.Substring(0,1).ToUpper() + suit.Substring(1, suit.Length - 1).ToLower();
+            this.cardName = ValueToCard(value) + " of " + suit2;
+            this.cardFaceUp = isFaceUp;
+            this.CardBack = "/Images/Cards/CardBack.png";
+            this.CardImage = "/Images/Cards/" + ImageNameFormat(suit2, value)+".png";
+            this.cardFace = cardFaceUp ? CardImage : CardBack;
         }
         private string ImageNameFormat(string suit2, int value)
         {
@@ -43,7 +39,7 @@ namespace Cardgames.Classes
         private string ValueToCard(int value)
         {
             string convertedValue = "";
-            if (value == 1)
+            if(value == 1)
             {
                 convertedValue = "Ace";
             }
@@ -70,7 +66,7 @@ namespace Cardgames.Classes
         {
             get { return cardFace; }
             set { cardFace = value; }
-
+           
         }
         public string CardName
         {
@@ -79,24 +75,9 @@ namespace Cardgames.Classes
         public bool CardFaceUp
         {
             get { return cardFaceUp; }
-            set
-            {
-                cardFaceUp = value;
-                cardFace = cardFaceUp ? CardImage : CardBack;
-            }
+            set { cardFaceUp = value;
+                cardFace = cardFaceUp ? CardImage : CardBack; }
         }
-        public Card(CardSuit suit, CardValue faceValue)//, bool isFaceUp)
-        {
-            this.Suit = suit;
-            this.FaceValue = faceValue;
-            
-            //string suit2 = suit.Substring(0, 1).ToUpper() + suit.Substring(1, suit.Length - 2).ToLower();
-            //    this.cardName = ValueToCard(value) + " of " + suit2;
-            //    this.cardFaceUp = isFaceUp;
-            //    this.CardBack = "/Images/Cards/CardBack.png";
-            //    this.CardImage = "/Images/Cards/" + ImageNameFormat(suit2, value) + ".png";
-            //    this.cardFace = cardFaceUp ? CardImage : CardBack;
-            //}
-        }
+
     }
 }

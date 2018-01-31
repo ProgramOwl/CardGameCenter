@@ -4,9 +4,270 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cardgames"
+        xmlns:uc="clr-namespace:Cardgames.UserControlsi"
         mc:Ignorable="d"
-        Title="GoFish" Height="350" Width="500">
-    <Grid>
-        
+        Title="GoFish" Height="500" Width="500">
+    <Window.Resources>
+        <SolidColorBrush x:Key="HoverOrange" Color="#FF8201" Opacity="0.5"/>
+        <SolidColorBrush x:Key="HoverRed" Color="#C20" Opacity="0.5"/>
+        <SolidColorBrush x:Key="HoverGreen" Color="#8CA65F" Opacity="0.5"/>
+        <VisualBrush x:Key="GreenBack">
+            <VisualBrush.Visual>
+                <Grid>
+                    <Rectangle Fill="Green"/>
+                    <Image Source="Images/light_wool_green.png"/>
+                </Grid>
+            </VisualBrush.Visual>
+        </VisualBrush>
+        <VisualBrush x:Key="BlackBack">
+            <VisualBrush.Visual>
+                <Grid>
+                    <Rectangle Fill="Black"/>
+                    <Image Stretch="Fill" Source="Images/black_scales.png"/>
+                </Grid>
+            </VisualBrush.Visual>
+        </VisualBrush>
+        <VisualBrush x:Key="AluBack">
+            <VisualBrush.Visual>
+                <Grid>
+                    <Rectangle Fill="White"/>
+                    <Image Source="Images/brushed_alu.png"/>
+                </Grid>
+            </VisualBrush.Visual>
+        </VisualBrush>
+        <Style x:Key="DropDownStyle">
+            <Setter Property="Label.FontSize" Value="14"/>
+            <Setter Property="Label.FontWeight" Value="Medium"/>
+            <Setter Property="Label.Margin" Value="0"/>
+            <Setter Property="Label.Padding" Value="3 2"/>
+            <Setter Property="Label.MinWidth" Value="80"/>
+        </Style>
+        <Style x:Key="PlayerStyle">
+            <Setter Property="Label.Foreground" Value="Black"/>
+            <Setter Property="Label.FontSize" Value="18"/>
+            <Setter Property="Label.FontWeight" Value="Medium"/>
+            <Setter Property="Label.Width" Value="100"/>
+            <Setter Property="Label.Height" Value="35"/>
+            <Setter Property="Label.Margin" Value="0"/>
+            <Setter Property="Label.Background" Value="Transparent"/>
+            <Setter Property="Label.BorderBrush" Value="Black"/>
+            <Setter Property="Label.HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="PlayerInfoStyle">
+            <Setter Property="Label.Foreground" Value="#FF8201"/>
+            <Setter Property="Label.FontSize" Value="14"/>
+            <Setter Property="Label.FontWeight" Value="Medium"/>
+            <Setter Property="Label.Width" Value="50"/>
+            <Setter Property="Label.Height" Value="30"/>
+            <Setter Property="Label.Margin" Value="0"/>
+            <Setter Property="Label.Padding" Value="2 0 0 0"/>
+            <Setter Property="Label.Background" Value="Transparent"/>
+            <Setter Property="Label.BorderBrush" Value="Black"/>
+            <Setter Property="Label.HorizontalContentAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="BasicTextStyle">
+            <Setter Property="Label.FontSize" Value="16"/>
+            <Setter Property="Label.FontWeight" Value="Medium"/>
+            <Setter Property="Label.Margin" Value="5"/>
+        </Style>
+        <Style x:Key="TitleStyle">
+            <Setter Property="Label.Foreground" Value="#FF8201"/>
+            <Setter Property="Label.FontSize" Value="20"/>
+            <Setter Property="Label.FontWeight" Value="Medium"/>
+            <Setter Property="Label.Margin" Value="0"/>
+            <Setter Property="Label.BorderThickness" Value="1"/>
+            <Setter Property="Label.BorderBrush" Value="{StaticResource AluBack}"/>
+            <Setter Property="Label.HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="FormButtonStyle">
+            <Setter Property="Button.Foreground" Value="Black"/>
+            <Setter Property="Button.FontSize" Value="18"/>
+            <Setter Property="Button.FontWeight" Value="Medium"/>
+            <Setter Property="Button.Width" Value="120"/>
+            <Setter Property="Button.Height" Value="30"/>
+            <Setter Property="Button.Margin" Value="0"/>
+            <Setter Property="Button.Background" Value="Transparent"/>
+            <Setter Property="Button.BorderBrush" Value="Black"/>
+            <Setter Property="Button.HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Button.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="White" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Button.Background" Value="{StaticResource HoverOrange}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="Close"
+                        Executed="Close_Click"/>
+        <!--<CommandBinding Command="Save"
+                        Executed="Save_Executed" />-->
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="C"
+                    Modifiers="Control"
+                    Command="Close" />
+    </Window.InputBindings>
+    <Grid Background="#8CA65F">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65"/>
+            <RowDefinition Height="80*"/>
+        </Grid.RowDefinitions>
+        <!--TitleBar-->
+        <StackPanel Grid.Row="0" Background="Black">
+            <Label x:Name="Title" Content="Go Fish" 
+                       FontSize="40" FontWeight="Bold" 
+                       Foreground="White" Margin="0"
+                       HorizontalAlignment="Center">
+            </Label>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Background="{StaticResource GreenBack}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="80*"/>
+            </Grid.ColumnDefinitions>
+            <!--PlayerBar-->
+            <StackPanel  Grid.Column="0" x:Name="SideNav" Background="{StaticResource AluBack}" VerticalAlignment="Stretch" HorizontalAlignment="Left" Grid.RowSpan="2">
+                <StackPanel x:Name="player1Stats" Orientation="Vertical">
+                    <Label Content="Player 1" Style="{StaticResource PlayerStyle}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Points:" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player1Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel x:Name="player2Stats" Orientation="Vertical">
+                    <Label Content="Player 2" Style="{StaticResource PlayerStyle}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Points:" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player2Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel x:Name="player3Stats" Orientation="Vertical">
+                    <Label Content="Player 3" Style="{StaticResource PlayerStyle}"/>
+                    <StackPanel Orientation="Horizontal" >
+                        <Label Content="Points: " Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player3Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel x:Name="player4Stats" Orientation="Vertical">
+                    <Label Content="Player 4" Style="{StaticResource PlayerStyle}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Points: " Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player4Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
+                    </StackPanel>
+                </StackPanel>
+                <ListBox x:Name="PlayerListBox" Visibility="Collapsed" ScrollViewer.CanContentScroll="False"
+                     SelectionMode="Extended" Width="100" Height="50" Background="Blue" SelectedIndex="0">
+                    <!--<ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="BlanchedAlmond" 
+                            BorderThickness="3" Width="165" Background="Silver">
+                                <StackPanel>
+                                    <Label FontSize="14" Foreground="Black"
+                                            FontWeight="Bold"
+                                            Content="{Binding Name}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label FontSize="14" Foreground="NavajoWhite"
+                                            FontWeight="Light"
+                                            Content="Group: "/>
+                                        <Label FontSize="14" Foreground="White"
+                                            FontWeight="Light"
+                                            Content="{Binding Group}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>-->
+                </ListBox>
+            </StackPanel>
+            <!--MainArea-->
+            <StackPanel Grid.Column="1" x:Name="Main">
+                <!--Turn Controls-->
+                <StackPanel Grid.Row="0" x:Name="ControlPanel">
+                    <StackPanel Background="Black">
+                        <Label x:Name="CurrentPlayerLabel"  Style="{StaticResource TitleStyle}" Content="Player #'s Turn"/>
+                    </StackPanel>
+                    <StackPanel x:Name="TurnOptions" VerticalAlignment="Top" HorizontalAlignment="Center">
+                        <StackPanel x:Name="CardSelector" Orientation="Horizontal" 
+                                    VerticalAlignment="Top" HorizontalAlignment="Left">
+                            <Label Style="{StaticResource BasicTextStyle}" Content="Card Selected:"/>
+                            <Label Style="{StaticResource BasicTextStyle}" Background="AliceBlue" MinWidth="35"
+                                   Content="{Binding ElementName=CardList_ListBox, Path=SelectedItem.CardName}"/>
+                        </StackPanel>
+                        <StackPanel x:Name="OpponentSelector" Orientation="Horizontal" 
+                                    VerticalAlignment="Top" HorizontalAlignment="Left">
+                            <Label Style="{StaticResource BasicTextStyle}">Select Opponent:</Label>
+                            <ComboBox x:Name="Opponent"  Width="70" SelectedIndex="0"
+                                      HorizontalAlignment="Left" VerticalAlignment="Top"
+                                      Style="{StaticResource DropDownStyle}" Margin="0 20 0 0">
+                                <ComboBoxItem x:Name="OpponentOption1">
+                                    <Label x:Name="OpponentOption1Label" Content="Player 2" Style="{StaticResource DropDownStyle}"/>
+                                </ComboBoxItem>
+                                <ComboBoxItem x:Name="OpponentOption2">
+                                    <Label x:Name="OpponentOption2Label" Content="Player 3" Style="{StaticResource DropDownStyle}"/>
+                                </ComboBoxItem>
+                                <ComboBoxItem x:Name="OpponentOption3">
+                                    <Label x:Name="OpponentOption3Label" Content="Player 4" Style="{StaticResource DropDownStyle}"/>
+                                </ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Background="{StaticResource AluBack}" Width="120" Height="30" Margin="5">
+                            <Button x:Name="GoFishTurnButton" Content="Execute Turn"
+                                Style="{StaticResource FormButtonStyle}"
+                                Click="GoFishTurnButton_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <!--Persons hand-->
+                <StackPanel Grid.Row="1" x:Name="PlayerCardDisplaySection">
+                    <StackPanel Background="Black">
+                        <Label x:Name="activePlayerLabel" Style="{StaticResource TitleStyle}">Your Cards</Label>
+                    </StackPanel>
+                    <Viewbox>
+                    <StackPanel x:Name="ActiveCards" HorizontalAlignment="Left" Margin="5"
+                                    Visibility="Visible" Background="Transparent" Orientation="Horizontal">
+                        <!--ScrollViewer.HorizontalScrollMode="Enabled"-->
+
+                            <ListBox x:Name="CardList_ListBox" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" MinHeight="252" Width="840" ScrollViewer.IsDeferredScrollingEnabled="False"
+                     SelectionMode="Single" Background="{StaticResource HoverGreen}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
+                         ItemsSource="{Binding ElementName=PlayerListBox, Path=SelectedItem.PlayerImageHand}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <!--<Viewbox>-->
+                                        <uc:CardDisplay Margin="1"/>
+                                        <!--<Label Content="{Binding PhoneNumberX}" Style="{StaticResource DropDownStyle}"/>-->
+                                        <!--</Viewbox>-->
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </Viewbox>
+                </StackPanel>
+            </StackPanel>
+            <!--CoverPanel-->
+            <StackPanel Grid.Column="1" x:Name="CoverPanel" Visibility="Collapsed" Background="{StaticResource BlackBack}">
+                <StackPanel Margin="20">
+                    <StackPanel Background="{StaticResource AluBack}" Width="150" Height="30" Margin="5">
+                        <Button x:Name="NextPlayerButton" Content="Start Next Trun"
+                                Style="{StaticResource FormButtonStyle}" Width="150"
+                                Click="NextPlayerButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

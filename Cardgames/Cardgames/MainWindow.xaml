@@ -45,6 +45,7 @@
             <Setter Property="Button.Background" Value="Transparent"/>
             <Setter Property="Button.BorderBrush" Value="Black"/>
             <Setter Property="Button.HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Button.VerticalContentAlignment" Value="Center"/>
             <Setter Property="Button.Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -72,7 +73,7 @@
             <Setter Property="Label.Height" Value="30"/>            
         </Style>
         <Style x:Key="TitleStyle">
-            <Setter Property="Label.Foreground" Value="#8CA65F"/>
+            <Setter Property="Label.Foreground" Value="#FF8201"/>
             <Setter Property="Label.FontSize" Value="30"/>
             <Setter Property="Label.FontWeight" Value="Medium"/>
             <Setter Property="Label.Height" Value="50"/>
@@ -129,29 +130,32 @@
                        HorizontalAlignment="Center">
             </Label>
         </StackPanel>
+        
         <Grid Grid.Row="1" Background="{StaticResource GreenBack}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20*" MinWidth="100"/>
-                <ColumnDefinition Width="80*"/>
-            </Grid.ColumnDefinitions>
-            <!--NavBar-->
-            <StackPanel  Grid.Column="0" x:Name="SideNav" Background="{StaticResource BlackBack}" VerticalAlignment="Stretch" HorizontalAlignment="Left">
-                <Button x:Name="GoFishButton" Content="Go Fish"
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="80*"/>
+                </Grid.ColumnDefinitions>
+                <!--NavBar-->
+                <StackPanel  Grid.Column="0" x:Name="SideNav" Background="{StaticResource BlackBack}" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+                    <Button x:Name="GoFishButton" Content="Go Fish"
                     Style="{StaticResource NavButtonStyle}"
                     Click="GoFishButton_Click"></Button>
-                <Button x:Name="BlackJackButton" Content="Black Jack"
+                    <Button x:Name="BlackJackButton" Content="Black Jack"
                     Style="{StaticResource NavButtonStyle}"
                     Click="BlackJackButton_Click"></Button>
-            </StackPanel>
-            <!--MainArea-->
+                </StackPanel>
+                <!--MainArea-->
             <StackPanel Grid.Column="1" x:Name="Main" Orientation="Vertical" 
                         VerticalAlignment="Top" HorizontalAlignment="Left">
+                <StackPanel Background="Black">
+                    <Label x:Name="subTitle" Style="{StaticResource TitleStyle}">Directions</Label>
+                </StackPanel>
                 <Viewbox Grid.Column="1">
                     <StackPanel x:Name="HomeTextPage" HorizontalAlignment="Left" 
                                 Visibility="Visible" MinWidth="400">
                         <TextBlock Style="{StaticResource BasicTextStyle}">
-                        Directions: 
-                            <LineBreak/>Choose a card game on the side. 
+                            Choose a card game on the side. 
                             <LineBreak/>Select your game style. 
                         <LineBreak/>Hit start to begin the game.
                         </TextBlock>
@@ -161,12 +165,9 @@
                     <StackPanel x:Name="GoFishForm" Visibility="Collapsed"  Orientation="Vertical" 
                                 VerticalAlignment="Top" HorizontalAlignment="Left" 
                                 Margin="0"  MinWidth="350">
-                        <StackPanel Background="Black">
-                            <Label Style="{StaticResource TitleStyle}">Go Fish Game</Label>
-                        </StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                             <Label Content="Number of Players:" Style="{StaticResource BasicTextStyle}"/>
-                            <ComboBox x:Name="AmountOfPlayersGo"  Width="70"
+                            <ComboBox x:Name="AmountOfPlayersGo"  Width="70" SelectedIndex="0"
                                       HorizontalAlignment="Left" VerticalAlignment="Top"
                                       Style="{StaticResource DropDownStyle}" Margin="0 20 0 0">
                                 <ComboBoxItem>
@@ -191,12 +192,9 @@
                     <StackPanel x:Name="BlackJackForm" Visibility="Collapsed" Orientation="Vertical" 
                                 VerticalAlignment="Top" HorizontalAlignment="Left" 
                                 Margin="0" MinWidth="350">
-                        <StackPanel Background="Black">
-                            <Label Style="{StaticResource TitleStyle}">Black Jack Game</Label>
-                        </StackPanel>
                         <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
                             <Label Content="Number of Players:" Style="{StaticResource BasicTextStyle}"/>
-                            <ComboBox x:Name="AmountOfPlayersBlack" Width="70"
+                            <ComboBox x:Name="AmountOfPlayersBlack" Width="70" SelectedIndex="0"
                                       HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Style="{StaticResource DropDownStyle}" Margin="0 20 0 0">
                                 <ComboBoxItem>

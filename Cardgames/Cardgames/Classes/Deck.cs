@@ -32,9 +32,24 @@ namespace Cardgames.Classes
                 }
             }
         }
+        public Card[] ShuffleDeck()
+        {
+
+            Random r = new Random();
+            for(int i = 0; i < Cards.Length - 1; i++)
+            {
+                int j = r.Next(i, Cards.Length);
+                Card tempCard = Cards[i];
+                Cards[i] = Cards[j];
+                Cards[j] = tempCard;
+            }
+
+            return Cards;
+        }
         public Deck()
         {
             FillDeck();
+            Cards = ShuffleDeck();
         }
     }
 }

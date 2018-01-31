@@ -21,6 +21,8 @@ namespace Cardgames
     /// </summary>
     public partial class MainWindow : Window
     {
+        private GoFish goFishWindow = new GoFish();
+        private Blackjack blackJackWindow = new Blackjack();
         public MainWindow()
         {
             InitializeComponent();
@@ -58,15 +60,22 @@ namespace Cardgames
 
         private void StartGoFishButton_Click(object sender, RoutedEventArgs e)
         {
-            int number = AmountOfPlayersGo.SelectedIndex;
+            int number = AmountOfPlayersGo.SelectedIndex+2;
             //call to page
             //return 
-            new GoFish {DataContext=number}.Show();
+            //new GoFish {DataContext=number}.Show();
+
+            goFishWindow.Setup(number);
+            goFishWindow.Show();
+            this.Close();
         }
 
         private void StartBlackJackButton_Click(object sender, RoutedEventArgs e)
         {
-            int number = AmountOfPlayersBlack.SelectedIndex;
+            int number = AmountOfPlayersBlack.SelectedIndex+1;
+            blackJackWindow.StartGame(number);
+            blackJackWindow.Show();
+            this.Close();
             //call to page
         }
         public void DeckFillTest()

@@ -26,7 +26,7 @@ namespace Cardgames.Classes
             {
                 for(int j = 0; j < ranks.Length; j++)
                 {
-                    tempCard = new Card(suits[i], ranks[j]);
+                    tempCard = new Card(suits[i], ranks[j], false);
                     cards[cardNumber] = tempCard;
                     cardNumber++;
                 }

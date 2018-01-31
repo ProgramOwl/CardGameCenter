@@ -30,14 +30,20 @@ namespace Cardgames
         public bool player3Bet = false;
         public bool player4Bet = false;
         public bool player5Bet = false;
+        public int counter = 0;
         public Blackjack()
         {
             InitializeComponent();
         }
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
         public void StartGame(int players)
         {
-            BlackJackDealer dealer = new BlackJackDealer(0, 0);
-            if(players == 5)
+            SetupPlayerVisibilityBlack(players);
+            //BlackJackDealer dealer = new BlackJackDealer(0, 0);
+            /*if(players == 5)
             {
                 Player5Game();
             } else if(players == 4)
@@ -51,10 +57,11 @@ namespace Cardgames
                 Player2Game();
             } else
             {
-                Player1Game();
-            }
+                player1 = new Player("Player 1", 0, 20, 0, 0);
+            TurnRotation(1);
+            }*/
         }
-        private void Player1Game()
+        /*private void Player1Game()
         {
             player1 = new Player("Player 1", 0, 20, 0, 0);
             TurnRotation(1);
@@ -91,80 +98,91 @@ namespace Cardgames
         }
         private void TurnRotation(int turns)
         {
-            int counter = 0;
-            if(turns == 1)
+            //int counter = 0;
+            PlayerListBox.SelectedIndex = counter % turns;
+            if (counter % turns == 0)
             {
                 Console.WriteLine("player 1 turn");
-            } else if(turns == 2)
+                counter++;
+            }
+            else if (counter % turns == 1)
             {
-                if(counter % turns == 0)
-                {
-                    Console.WriteLine("player 1 turn");
-                    counter++;
-                } else
-                {
-                    Console.WriteLine("player 2 turn");
-                    counter++;
-                }
-            } else if(turns == 3)
+                Console.WriteLine("player 2 turn");
+                counter++;
+            }
+            else if (counter % turns == 2)
             {
-                if(counter % turns == 0)
-                {
-                    Console.WriteLine("player 1 turn");
-                    counter++;
-                } else if(counter % turns == 1)
-                {
-                    Console.WriteLine("player 2 turn");
-                    counter++;
-                }else
-                {
-                    Console.WriteLine("player 3 turn");
-                    counter++;
-                }
-            } else if(turns == 4)
+                Console.WriteLine("player 3 turn");
+                counter++;
+            }
+            else if (counter % turns == 3)
             {
-                if(counter % turns == 0)
-                {
-                    Console.WriteLine("player 1 turn");
-                    counter++;
-                } else if(counter % turns == 1)
-                {
-                    Console.WriteLine("player 2 turn");
-                    counter++;
-                } else if(counter % turns == 2)
-                {
-                    Console.WriteLine("player 3 turn");
-                    counter++;
-                } else
-                {
-                    Console.WriteLine("player 4 turn");
-                    counter++;
-                }
-            } else
+                Console.WriteLine("plaer 4 turn");
+                counter++;
+            }
+            else if (counter % turns == 4)
             {
-                if (counter % turns == 0)
-                {
-                    Console.WriteLine("player 1 turn");
-                    counter++;
-                }
-                else if (counter % turns == 1)
-                {
-                    Console.WriteLine("player 2 turn");
-                    counter++;
-                }
-                else if (counter % turns == 2)
-                {
-                    Console.WriteLine("player 3 turn");
-                    counter++;
-                } else if(counter % turns == 3)
-                {
-                    Console.WriteLine("plaer 4 turn");
-                    counter++;
-                }else
-                {
-                    Console.WriteLine("player 5 turn");
-                    counter++;
-                }
+                Console.WriteLine("player 5 turn");
+                counter++;
+            }    
+        }
+        */
+        private void ChangeTurn()
+        {
+            //PlayerListBox.SelectedIndex = counter % turns;
+            CurrentPlayerLabel.Content = "Player " + (PlayerListBox.SelectedIndex + 1) + "'s Trun";
+        }
+        private void SplitButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void HitButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void StayButton_Click(object sender, RoutedEventArgs e)
+        {
+            TurnSelection.Visibility = Visibility.Collapsed;
+        }
+
+        private void BetSelectedButton_Click(object sender, RoutedEventArgs e)
+        {
+            //place in bet amount from BetAmount, 0=$1, 1=$5, 2=$10
+            //BetPanel.Visibility = Visibility.Collapsed;
+            //TurnSelection.Visibility = Visibility.Visible;
+        }
+        private void SetupPlayerVisibilityBlack(int numberOfPlayers)
+        {
+            player1Stats.Visibility = Visibility.Visible;
+            player2Stats.Visibility = Visibility.Collapsed;
+            player3Stats.Visibility = Visibility.Collapsed;
+            player4Stats.Visibility = Visibility.Collapsed;
+            player5Stats.Visibility = Visibility.Collapsed;
+            if (numberOfPlayers == 2)
+            {
+                player2Stats.Visibility = Visibility.Visible;
+                player3Stats.Visibility = Visibility.Collapsed;
+                player4Stats.Visibility = Visibility.Collapsed;
+                player5Stats.Visibility = Visibility.Collapsed;
+            } else if (numberOfPlayers == 3)
+            {
+                player2Stats.Visibility = Visibility.Visible;
+                player3Stats.Visibility = Visibility.Visible;
+                player4Stats.Visibility = Visibility.Collapsed;
+                player5Stats.Visibility = Visibility.Collapsed;
+            } else if (numberOfPlayers == 4)
+            {
+                player2Stats.Visibility = Visibility.Visible;
+                player3Stats.Visibility = Visibility.Visible;
+                player4Stats.Visibility = Visibility.Visible;
+                player5Stats.Visibility = Visibility.Collapsed;
+            } else if (numberOfPlayers == 5)
+            {
+                player2Stats.Visibility = Visibility.Visible;
+                player3Stats.Visibility = Visibility.Visible;
+                player4Stats.Visibility = Visibility.Visible;
+                player5Stats.Visibility = Visibility.Visible;
             }
         }
     }

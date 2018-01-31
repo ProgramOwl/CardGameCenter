@@ -11,6 +11,10 @@ namespace Cardgames
     {
         public string Name { get; set; }
         public Card[] PlayerHand { get; set; }
+        public Card[] PlayerHand2 { get; set; }
+        //public ImageCard[] PlayerImageHand { get; set; }
+        //public ImageCard[] PlayerImageHand2 { get; set; }
+        public int bet { get; set; }
         public int PlayerBank { get; set; }
         public int GoFishCounter { get; set; }
         public int BlackjackScore { get; set; }

@@ -45,6 +45,7 @@
             <Setter Property="Button.Background" Value="Transparent"/>
             <Setter Property="Button.BorderBrush" Value="Black"/>
             <Setter Property="Button.HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Button.VerticalContentAlignment" Value="Center"/>
             <Setter Property="Button.Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -130,9 +131,8 @@
             </Label>
         </StackPanel>
         
-            <Grid Grid.Row="1" Background="{StaticResource GreenBack}">
-                
-                <Grid.ColumnDefinitions>
+        <Grid Grid.Row="1" Background="{StaticResource GreenBack}">
+            <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="80*"/>
                 </Grid.ColumnDefinitions>
@@ -167,7 +167,7 @@
                                 Margin="0"  MinWidth="350">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                             <Label Content="Number of Players:" Style="{StaticResource BasicTextStyle}"/>
-                            <ComboBox x:Name="AmountOfPlayersGo"  Width="70"
+                            <ComboBox x:Name="AmountOfPlayersGo"  Width="70" SelectedIndex="0"
                                       HorizontalAlignment="Left" VerticalAlignment="Top"
                                       Style="{StaticResource DropDownStyle}" Margin="0 20 0 0">
                                 <ComboBoxItem>
@@ -194,7 +194,7 @@
                                 Margin="0" MinWidth="350">
                         <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
                             <Label Content="Number of Players:" Style="{StaticResource BasicTextStyle}"/>
-                            <ComboBox x:Name="AmountOfPlayersBlack" Width="70"
+                            <ComboBox x:Name="AmountOfPlayersBlack" Width="70" SelectedIndex="0"
                                       HorizontalAlignment="Left" VerticalAlignment="Top"
                                        Style="{StaticResource DropDownStyle}" Margin="0 20 0 0">
                                 <ComboBoxItem>

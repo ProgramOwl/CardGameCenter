@@ -132,11 +132,11 @@ namespace Cardgames
             }
         }
 
-        public void MatchingCards(Card x, Card y)
+        public void MatchingCards(Player p, Card x, Card y)
         {
             if (x.FaceValue == y.FaceValue)
             {
-                
+                p.GoFishCounter++;
             }
         }
         public void DeckSetup()

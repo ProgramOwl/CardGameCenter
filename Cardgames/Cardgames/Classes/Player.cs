@@ -15,7 +15,8 @@ namespace Cardgames
         public int Bet { get; set; }
         public int PlayerBank { get; set; }
         public int GoFishCounter { get; set; }
-        public Player(string name, List<Card> hand, List<Card> hand2, int bank, int fishScore, int bet)
+        public bool Playing { get; set; }
+        public Player(string name, List<Card> hand, List<Card> hand2, int bank, int fishScore, int bet, bool playing)
         {
             Name = name;
             PlayerHand = hand;
@@ -23,6 +24,7 @@ namespace Cardgames
             PlayerBank = bank;
             GoFishCounter = fishScore;
             Bet = bet;
+            Playing = playing;
         }
     }
 }

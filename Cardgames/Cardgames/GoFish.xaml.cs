@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Cardgames.Classes;
 
 namespace Cardgames
 {
@@ -68,7 +67,7 @@ namespace Cardgames
             OpponentOption2Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +2);
             OpponentOption3Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +3);
         }
-        private void Setup()
+        public void Setup()
         {
             //private ObservableCollection<Player> Players;
             // ObservableCollection<Player> Players = new ObservableCollection<Player>();
@@ -133,11 +132,11 @@ namespace Cardgames
             }
         }
 
-        public void MatchingCards(Card x, Card y)
+        public void MatchingCards(Player p, Card x, Card y)
         {
             if (x.FaceValue == y.FaceValue)
             {
-                
+                p.GoFishCounter++;
             }
         }
         public void DeckSetup()
@@ -171,24 +170,24 @@ namespace Cardgames
 
         private void Player2Game()
         {
-            player1 = new Player("Player 1", 5, 0, 0, 0);
-            player2 = new Player("Player 2", 5, 0, 0, 0);
+            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
+            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
             //TurnRotation(2);               
         }
         private void Player3Game()
         {
-            player1 = new Player("Player 1", 5, 0, 0, 0);
-            player2 = new Player("Player 2", 5, 0, 0, 0);
-            player3 = new Player("Player 3", 5, 0, 0, 0);
+            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
+            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
+            player3 = new Player("Player 3", new List<Card>(), 0, 0, 0);
 
             //TurnRotation(3);               
         }
         private void Player4Game()
         {
-            player1 = new Player("Player 1", 5, 0, 0, 0);
-            player2 = new Player("Player 2", 5, 0, 0, 0);
-            player3 = new Player("Player 3", 5, 0, 0, 0);
-            player4 = new Player("Player 4", 5, 0, 0, 0);
+            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
+            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
+            player3 = new Player("Player 3", new List<Card>(), 0, 0, 0);
+            player4 = new Player("Player 4", new List<Card>(), 0, 0, 0);
 
             //TurnRotation(4);               
         }
@@ -214,7 +213,7 @@ namespace Cardgames
             //check if the deck is empty
             //if empty call endGame()???
             //else remove next card in the deck
-            if (goFishDeck.Cards.Length > 0)
+            if (goFishDeck.Cards.Count > 0)
             {
                 getNextCards(player, 1);
                 //player.CardHand.Add(cards.First());

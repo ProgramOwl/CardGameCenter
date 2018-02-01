@@ -54,14 +54,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\BlackJackDealer.cs" />
-    <Compile Include="Classes\Card.cs" />
-    <Compile Include="Classes\CardSuit.cs" />
-    <Compile Include="Classes\CardValue.cs" />
-    <Compile Include="Classes\Deck.cs" />
-    <Compile Include="Classes\ImageCard.cs" />
-    <Compile Include="Classes\Player.cs" />
-    <Compile Include="Classes\Playerv2.cs" />
     <Compile Include="UserControlsi\CardDisplay.xaml.cs">
       <DependentUpon>CardDisplay.xaml</DependentUpon>
     </Compile>
@@ -84,6 +76,14 @@
     <Compile Include="Blackjack.xaml.cs">
       <DependentUpon>Blackjack.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\BlackJackDealer.cs" />
+    <Compile Include="Classes\Card.cs" />
+    <Compile Include="Classes\CardSuit.cs" />
+    <Compile Include="Classes\CardValue.cs" />
+    <Compile Include="Classes\Deck.cs" />
+    <Compile Include="Classes\ImageCard.cs" />
+    <Compile Include="Classes\Player.cs" />
+    <Compile Include="Classes\Playerv2.cs" />
     <Compile Include="GoFish.xaml.cs">
       <DependentUpon>GoFish.xaml</DependentUpon>
     </Compile>

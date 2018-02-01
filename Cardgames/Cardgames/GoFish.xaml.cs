@@ -171,24 +171,24 @@ namespace Cardgames
 
         private void Player2Game()
         {
-            player1 = new Player("Player 1", 5, 0, 0, 0);
-            player2 = new Player("Player 2", 5, 0, 0, 0);
+            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
+            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
             //TurnRotation(2);               
-        }
-        private void Player3Game()
-        {
-            player1 = new Player("Player 1", 5, 0, 0, 0);
-            player2 = new Player("Player 2", 5, 0, 0, 0);
-            player3 = new Player("Player 3", 5, 0, 0, 0);
-
-            //TurnRotation(3);               
-        }
-        private void Player4Game()
-        {
-            player1 = new Player("Player 1", 5, 0, 0, 0);
-            player2 = new Player("Player 2", 5, 0, 0, 0);
-            player3 = new Player("Player 3", 5, 0, 0, 0);
-            player4 = new Player("Player 4", 5, 0, 0, 0);
+        }                                    
+        private void Player3Game()           
+        {                                    
+            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
+            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
+            player3 = new Player("Player 3", new List<Card>(), 0, 0, 0);
+                                            
+            //TurnRotation(3);              
+        }                                   
+        private void Player4Game()          
+        {                                   
+            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
+            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
+            player3 = new Player("Player 3", new List<Card>(), 0, 0, 0);
+            player4 = new Player("Player 4", new List<Card>(), 0, 0, 0);
 
             //TurnRotation(4);               
         }
@@ -214,7 +214,7 @@ namespace Cardgames
             //check if the deck is empty
             //if empty call endGame()???
             //else remove next card in the deck
-            if (goFishDeck.Cards.Length > 0)
+            if (goFishDeck.Cards.Count > 0)
             {
                 getNextCards(player, 1);
                 //player.CardHand.Add(cards.First());
@@ -254,40 +254,33 @@ namespace Cardgames
                     break;
             }
 
-            //populate player hand with the correct amount of cards
 
         }
 
+            //populate player hand with the correct amount of cards
         public void getNextCards(Player player, int numOfCards)
         {
             for (int i = 0; i < numOfCards; i++)
             {
                 if (goFishDeck.Cards[i] != null)
                 {
-                    //player.CardHand[i] = goFishDeck.Cards[currIndex];
-                    currIndex ++;
+                    //player.PlayerHand.Add(goFishDeck.Cards.DrawCardMethod());
+
                 }
             }
 
-            //removeCards(5);
         }
 
 
+        public void DisplayHand(List<Card> cardsList)
+        {
+            foreach(Card c in cardsList)
+            {
 
+            }
 
-        //public void removeCards(int num)
-        //{
-        //    if (cards != null)
-        //    {
-        //        cards.RemoveRange(0, num);
-        //    }
-        //}
+        }
+
 
     }
 }
-//for (int i = 0; i < 5; i++)
-//{
-//    //player1.PlayerHand[i] = goFishDeck.Cards[i];
-//    player1.PlayerHand[i] = cards[i];
-//}
-//goFishDeck.Cards.Skip(5);

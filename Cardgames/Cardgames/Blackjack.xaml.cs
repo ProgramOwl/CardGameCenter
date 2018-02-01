@@ -43,62 +43,25 @@ namespace Cardgames
         {
             SetupPlayerVisibilityBlack(players);
             //BlackJackDealer dealer = new BlackJackDealer(0, 0);
-            /*if(players == 5)
+            if(players == 5)
             {
-                Player5Game();
+
             } else if(players == 4)
             {
-                Player4Game();
+
             } else if(players == 3)
             {
-                Player3Game();
+
             } else if(players == 2)
             {
-                Player2Game();
+
             } else
             {
-                player1 = new Player("Player 1", 0, 20, 0, 0);
-            TurnRotation(1);
-            }*/
-        }
-        /*private void Player1Game()
-        {
-            player1 = new Player("Player 1", 0, 20, 0, 0);
-            TurnRotation(1);
-        }
-        private void Player2Game()
-        {
-            player1 = new Player("Player 1", 0, 20, 0, 0);
-            player2 = new Player("Player 2", 0, 20, 0, 0);
-            TurnRotation(2);
-        }
-        private void Player3Game()
-        {
-            player1 = new Player("Player 1", 0, 20, 0, 0);
-            player2 = new Player("Player 2", 0, 20, 0, 0);
-            player3 = new Player("Player 3", 0, 20, 0, 0);
-            TurnRotation(3);
-        }
-        private void Player4Game()
-        {
-            player1 = new Player("Player 1", 0, 20, 0, 0);
-            player2 = new Player("Player 2", 0, 20, 0, 0);
-            player3 = new Player("Player 3", 0, 20, 0, 0);
-            player4 = new Player("Player 4", 0, 20, 0, 0);
-            TurnRotation(4);
-        }
-        private void Player5Game()
-        {
-            player1 = new Player("Player 1", 0, 20, 0, 0);
-            player2 = new Player("Player 2", 0, 20, 0, 0);
-            player3 = new Player("Player 3", 0, 20, 0, 0);
-            player4 = new Player("Player 4", 0, 20, 0, 0);
-            player5 = new Player("Player 5", 0, 20, 0, 0);
-            TurnRotation(5);
+
+            }
         }
         private void TurnRotation(int turns)
         {
-            //int counter = 0;
             PlayerListBox.SelectedIndex = counter % turns;
             if (counter % turns == 0)
             {
@@ -126,7 +89,6 @@ namespace Cardgames
                 counter++;
             }    
         }
-        */
         private void ChangeTurn()
         {
             //PlayerListBox.SelectedIndex = counter % turns;

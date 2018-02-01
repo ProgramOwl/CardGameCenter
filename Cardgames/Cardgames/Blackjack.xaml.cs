@@ -31,6 +31,19 @@ namespace Cardgames
         public bool player4Bet = false;
         public bool player5Bet = false;
         public int counter = 0;
+        public List<Card> dHand = new List<Card>();
+        public List<Card> dHand_2 = new List<Card>();
+        public List<Card> hand1 = new List<Card>();
+        public List<Card> hand1_2 = new List<Card>();
+        public List<Card> hand2 = new List<Card>();
+        public List<Card> hand2_2 = new List<Card>();
+        public List<Card> hand3 = new List<Card>();
+        public List<Card> hand3_2 = new List<Card>();
+        public List<Card> hand4 = new List<Card>();
+        public List<Card> hand4_2 = new List<Card>();
+        public List<Card> hand5 = new List<Card>();
+        public List<Card> hand5_2 = new List<Card>();
+        public List<Player> gamePlayers = new List<Player>();
         public Blackjack()
         {
             InitializeComponent();
@@ -42,27 +55,57 @@ namespace Cardgames
         public void StartGame(int players)
         {
             SetupPlayerVisibilityBlack(players);
-            //BlackJackDealer dealer = new BlackJackDealer(0, 0);
+            BlackJackDealer dealer = new BlackJackDealer(dHand, dHand_2);
             if(players == 5)
             {
-
+                player1 = new Player("Player 1", hand1, hand1_2, 20, 0, 0);
+                player2 = new Player("Player 2", hand2, hand2_2, 20, 0, 0);
+                player3 = new Player("Player 3", hand3, hand3_2, 20, 0, 0);
+                player4 = new Player("Player 4", hand4, hand4_2, 20, 0, 0);
+                player5 = new Player("Player 5", hand5, hand5_2, 20, 0, 0);
+                gamePlayers.Add(player1);
+                gamePlayers.Add(player2);
+                gamePlayers.Add(player3);
+                gamePlayers.Add(player4);
+                gamePlayers.Add(player5);
+                TurnRotation(5);
             } else if(players == 4)
             {
-
+                player1 = new Player("Player 1", hand1, hand1_2, 20, 0, 0);
+                player2 = new Player("Player 2", hand2, hand2_2, 20, 0, 0);
+                player3 = new Player("Player 3", hand3, hand3_2, 20, 0, 0);
+                player4 = new Player("Player 4", hand4, hand4_2, 20, 0, 0);
+                gamePlayers.Add(player1);
+                gamePlayers.Add(player2);
+                gamePlayers.Add(player3);
+                gamePlayers.Add(player4);
+                TurnRotation(4);
             } else if(players == 3)
             {
-
+                player1 = new Player("Player 1", hand1, hand1_2, 20, 0, 0);
+                player2 = new Player("Player 2", hand2, hand2_2, 20, 0, 0);
+                player3 = new Player("Player 3", hand3, hand3_2, 20, 0, 0);
+                gamePlayers.Add(player1);
+                gamePlayers.Add(player2);
+                gamePlayers.Add(player3);
+                TurnRotation(3);
             } else if(players == 2)
             {
-
+                player1 = new Player("Player 1", hand1, hand1_2, 20, 0, 0);
+                player2 = new Player("Player 2", hand2, hand2_2, 20, 0, 0);
+                gamePlayers.Add(player1);
+                gamePlayers.Add(player2);
+                TurnRotation(2);
             } else
             {
-
+                player1 = new Player("Player 1", hand1, hand1_2, 20, 0, 0);
+                gamePlayers.Add(player1);
+                TurnRotation(1);
             }
         }
         private void TurnRotation(int turns)
         {
-            PlayerListBox.SelectedIndex = counter % turns;
+            //PlayerListBox.SelectedIndex = counter % turns;
             if (counter % turns == 0)
             {
                 Console.WriteLine("player 1 turn");

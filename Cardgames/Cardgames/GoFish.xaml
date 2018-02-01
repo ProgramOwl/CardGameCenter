@@ -141,28 +141,28 @@
                     <Label Content="Player 1" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Points:" Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player1Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player1Points" Content="{Binding ElementName=PlayerListBox[0], Path=GoFishCounter}" Style="{StaticResource PlayerInfoStyle}"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player2Stats" Orientation="Vertical">
                     <Label Content="Player 2" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Points:" Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player2Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player2Points" Content="{Binding ElementName=PlayerListBox[1], Path=GoFishCounter}" Style="{StaticResource PlayerInfoStyle}"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player3Stats" Orientation="Vertical">
                     <Label Content="Player 3" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal" >
                         <Label Content="Points: " Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player3Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player3Points" Content="{Binding ElementName=PlayerListBox[2], Path=GoFishCounter}" Style="{StaticResource PlayerInfoStyle}"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player4Stats" Orientation="Vertical">
                     <Label Content="Player 4" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Points: " Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player4Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player4Points" Content="{Binding ElementName=PlayerListBox[3], Path=GoFishCounter}" Style="{StaticResource PlayerInfoStyle}"/>
                     </StackPanel>
                 </StackPanel>
                 <ListBox x:Name="PlayerListBox" Visibility="Collapsed" ScrollViewer.CanContentScroll="False"
@@ -200,25 +200,27 @@
                         <StackPanel x:Name="CardSelector" Orientation="Horizontal" 
                                     VerticalAlignment="Top" HorizontalAlignment="Left">
                             <Label Style="{StaticResource BasicTextStyle}" Content="Card Selected:"/>
-                            <Label Style="{StaticResource BasicTextStyle}" Background="AliceBlue" MinWidth="35"
+                            <Label Style="{StaticResource BasicTextStyle}" Background="AliceBlue" MinWidth="100"
                                    Content="{Binding ElementName=CardList_ListBox, Path=SelectedItem.CardName}"/>
                         </StackPanel>
-                        <StackPanel x:Name="OpponentSelector" Orientation="Horizontal" 
+                        <StackPanel x:Name="OpponentSelector" Orientation="Horizontal" Margin="5"
                                     VerticalAlignment="Top" HorizontalAlignment="Left">
-                            <Label Style="{StaticResource BasicTextStyle}">Select Opponent:</Label>
-                            <ComboBox x:Name="Opponent"  Width="70" SelectedIndex="0"
-                                      HorizontalAlignment="Left" VerticalAlignment="Top"
-                                      Style="{StaticResource DropDownStyle}" Margin="0 20 0 0">
-                                <ComboBoxItem x:Name="OpponentOption1">
-                                    <Label x:Name="OpponentOption1Label" Content="Player 2" Style="{StaticResource DropDownStyle}"/>
-                                </ComboBoxItem>
-                                <ComboBoxItem x:Name="OpponentOption2">
-                                    <Label x:Name="OpponentOption2Label" Content="Player 3" Style="{StaticResource DropDownStyle}"/>
-                                </ComboBoxItem>
-                                <ComboBoxItem x:Name="OpponentOption3">
-                                    <Label x:Name="OpponentOption3Label" Content="Player 4" Style="{StaticResource DropDownStyle}"/>
-                                </ComboBoxItem>
-                            </ComboBox>
+                            <Label Style="{StaticResource BasicTextStyle}" Margin="2 0 10 0" Height="25" Padding="1">Select Opponent:</Label>
+                            <Grid>
+                                <ComboBox x:Name="Opponent"  Width="70" SelectedIndex="0" 
+                                      HorizontalAlignment="Left" VerticalAlignment="Top" Padding="2 0"
+                                      Style="{StaticResource DropDownStyle}" Margin="0" Height="25">
+                                    <ComboBoxItem x:Name="OpponentOption1">
+                                        <Label x:Name="OpponentOption1Label" Content="Player 2" Style="{StaticResource DropDownStyle}"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem x:Name="OpponentOption2">
+                                        <Label x:Name="OpponentOption2Label" Content="Player 3" Style="{StaticResource DropDownStyle}"/>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem x:Name="OpponentOption3">
+                                        <Label x:Name="OpponentOption3Label" Content="Player 4" Style="{StaticResource DropDownStyle}"/>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                            </Grid>
                         </StackPanel>
                         <StackPanel Background="{StaticResource AluBack}" Width="120" Height="30" Margin="5">
                             <Button x:Name="GoFishTurnButton" Content="Execute Turn"
@@ -239,7 +241,7 @@
 
                             <ListBox x:Name="CardList_ListBox" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" MinHeight="252" Width="840" ScrollViewer.IsDeferredScrollingEnabled="False"
                      SelectionMode="Single" Background="{StaticResource HoverGreen}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
-                         ItemsSource="{Binding ElementName=PlayerListBox, Path=SelectedItem.PlayerImageHand}">
+                         ItemsSource="{Binding ElementName=PlayerListBox, Path=SelectedItem.PlayerHand}" SelectedIndex="0" >
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <VirtualizingStackPanel Orientation="Horizontal"/>

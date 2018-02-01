@@ -103,6 +103,10 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="{x:Type ListBoxItem}" TargetType="{x:Type ListBoxItem}">
+            <!-- Possibly other setters -->
+            <Setter Property="Focusable" Value="False" />
+        </Style>
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="Close"
@@ -139,36 +143,36 @@
                 <StackPanel x:Name="player1Stats" Orientation="Vertical">
                     <Label Content="Player 1" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Bank:" Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player1Bank" Content="$20" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label Content="Bank:  $" Style="{StaticResource PlayerInfoStyle}" Width="55"/>
+                        <Label x:Name="player1Bank" Content="{Binding ElementName=PlayerListBox[1], Path=PlayerBank}" Style="{StaticResource PlayerInfoStyle}" Width="45"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player2Stats" Orientation="Vertical">
                     <Label Content="Player 2" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Bank:" Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player2Bank" Content="$20" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label Content="Bank:  $" Style="{StaticResource PlayerInfoStyle}" Width="55"/>
+                        <Label x:Name="player2Bank" Content="{Binding ElementName=PlayerListBox[2], Path=PlayerBank}" Style="{StaticResource PlayerInfoStyle}" Width="45"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player3Stats" Orientation="Vertical">
                     <Label Content="Player 3" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal" >
-                        <Label Content="Bank: " Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player3Bank" Content="$20" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label Content="Bank:  $" Style="{StaticResource PlayerInfoStyle}" Width="55"/>
+                        <Label x:Name="player3Bank" Content="{Binding ElementName=PlayerListBox[3], Path=PlayerBank}" Style="{StaticResource PlayerInfoStyle}" Width="45"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player4Stats" Orientation="Vertical">
                     <Label Content="Player 4" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Bank: " Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player4Bank" Content="$20" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label Content="Bank:  $" Style="{StaticResource PlayerInfoStyle}" Width="55"/>
+                        <Label x:Name="player4Bank" Content="{Binding ElementName=PlayerListBox[4], Path=PlayerBank}" Style="{StaticResource PlayerInfoStyle}" Width="45"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player5Stats" Orientation="Vertical">
                     <Label Content="Player 5" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="Bank: " Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player5Bank" Content="$20" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label Content="Bank:  $" Style="{StaticResource PlayerInfoStyle}" Width="55"/>
+                        <Label x:Name="player5Bank" Content="{Binding ElementName=PlayerListBox[5], Path=PlayerBank}" Style="{StaticResource PlayerInfoStyle}" Width="45"/>
                     </StackPanel>
                 </StackPanel>
                 <ListBox x:Name="PlayerListBox" Visibility="Collapsed" ScrollViewer.CanContentScroll="False"
@@ -238,21 +242,29 @@
                         <StackPanel Background="Black" VerticalAlignment="Top">
                             <Label Style="{StaticResource TitleStyle}">House Cards</Label>
                         </StackPanel>
-                        <StackPanel x:Name="HouseCards" HorizontalAlignment="Left" Visibility="Visible" 
-                                    Background="Transparent" Orientation="Horizontal">
-                            <ListBox x:Name="HouseCardList_ListBox" ScrollViewer.CanContentScroll="False"
-                     SelectionMode="Extended" Height="126" Background="{StaticResource HoverGreen}" 
-                                         Margin="5" MinWidth="180" ItemsSource="{Binding BlackJackDealer.ImageCards}">
+                       
+                                    <Viewbox>
+                        <StackPanel x:Name="HouseCards"  HorizontalAlignment="Left" Margin="5"
+                                    Visibility="Visible" Background="Transparent" Orientation="Horizontal">
+                            <!--ScrollViewer.HorizontalScrollMode="Enabled"-->
+
+                            <ListBox x:Name="HouseCardList_ListBox" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" MinHeight="252" Width="540" ScrollViewer.IsDeferredScrollingEnabled="False"
+                     SelectionMode="Single" Background="{StaticResource HoverGreen}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
+                         ItemsSource="{Binding ElementName=PlayerListBox[0], Path=PlayerHand}">
+                                     <!--{Binding BlackJackDealer.DealerHand}">-->
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <Viewbox>
-                                            <uc:CardDisplay Margin="1"/>
-                                            <!--<Label Content="{Binding PhoneNumberX}" Style="{StaticResource DropDownStyle}"/>-->
-                                        </Viewbox>
+                                        <uc:CardDisplay Margin="1"/>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </StackPanel>
+                        </Viewbox>
                     </StackPanel>
                 </Grid>
                 <!--Player's Hand-->
@@ -260,21 +272,25 @@
                     <StackPanel Background="Black">
                         <Label x:Name="activePlayerLabel" Style="{StaticResource TitleStyle}">Your Cards</Label>
                     </StackPanel>
-                    <StackPanel x:Name="ActiveCards" Visibility="Visible" MinWidth="400" Margin="5 10"
-                                Background="Transparent" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <ListBox x:Name="CardList_ListBox" ScrollViewer.CanContentScroll="False" SelectionMode="Extended" 
-                                 MinHeight="170" Background="{StaticResource HoverGreen}" MinWidth="180"
-                                 ItemsSource="{Binding ElementName=PlayerListBox, Path=SelectedItem.ImageCards}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Viewbox>
+                        <Viewbox>
+                        <StackPanel x:Name="ActiveCards" HorizontalAlignment="Left" Margin="5"
+                                    Visibility="Visible" Background="Transparent" Orientation="Horizontal">
+                            <ListBox x:Name="CardList_ListBox" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" MinHeight="252" Width="840" ScrollViewer.IsDeferredScrollingEnabled="False"
+                     SelectionMode="Single" Background="{StaticResource HoverGreen}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
+                         ItemsSource="{Binding ElementName=PlayerListBox, Path=SelectedItem.PlayerHand}">
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                    <ListBox.ItemTemplate>
+                                    <DataTemplate>
                                         <uc:CardDisplay Margin="1"/>
-                                        <!--<Label Content="{Binding PhoneNumberX}" Style="{StaticResource DropDownStyle}"/>-->
-                                    </Viewbox>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </StackPanel>
+                                    </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
+                        </Viewbox>
                 </StackPanel>
             </StackPanel>
         </Grid>

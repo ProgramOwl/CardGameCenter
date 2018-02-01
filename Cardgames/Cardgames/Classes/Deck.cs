@@ -46,10 +46,55 @@ namespace Cardgames.Classes
 
             return Cards;
         }
-        //public Card[] Deal(Deck deck, string gameMode, bool isFirstDeal, int numOfPlayers)
-        //{
-
-        //}
+        public Deck Deal(Deck deck, string gameMode, bool isFirstDeal, List<Player> listPlayers)
+        {
+            Card tempCard;
+            var playerNumber = 0;
+            switch (gameMode)
+            {
+                case "blackjack":
+                    if (isFirstDeal)
+                    { 
+                            for(int i = 0; i < listPlayers.Count * 2 - 1; i++)
+                            {
+                                tempCard = deck.Cards[0];
+                                deck.Cards.RemoveAt(0);
+                                if(i <= listPlayers.Count - 1)
+                                {
+                                    addToPlayerHand(listPlayers[playerNumber], tempCard);
+                                }
+                                else
+                                {
+                                    tempCard.CardFaceUp = true;
+                                    addToPlayerHand(listPlayers[playerNumber], tempCard);
+                                }
+                            playerNumber++;
+                            }
+                    }
+                    break;
+                case "gofish":
+                    if (isFirstDeal)
+                    {
+                        for (int i = 0; i < listPlayers.Count * 5 - 1; i++)
+                        {
+                            tempCard = deck.Cards[0];
+                            deck.Cards.RemoveAt(0);
+                            addToPlayerHand(listPlayers[playerNumber], tempCard);  
+                        }
+                        playerNumber++;
+                    }
+                    break;
+            }
+            return deck;
+        }
+        public Deck dealerDeal(BlackJackDealer dealer)
+        {
+            return null;
+        }
+        public void addToPlayerHand(Player player, Card card)
+        {
+            player.PlayerHand.Add(card);
+        }
         public Deck()
         {
             FillDeck();

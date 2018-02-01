@@ -10,13 +10,16 @@ namespace Cardgames.Classes
     {
         public string Name { get; set; }
         //public Card[] PlayerHand { get; set; }
-        public ImageCard[] PlayerImageHand { get; set; }
+        public ImageCard[] PlayerHand { get; set; }
+
+        public int GoFishCounter { get; set; }
         //public int PlayerBank { get; set; }
         //public int BlackjackScore { get; set; }
-        public Playerv2(string name, ImageCard[] hand)
+        public Playerv2(string name, ImageCard[] hand, int fishScore)
         {
-            Name = name;
-            PlayerImageHand = hand;
+            this.Name = name;
+            this.PlayerHand = hand;
+            this.GoFishCounter = fishScore;
         }
     }
 }

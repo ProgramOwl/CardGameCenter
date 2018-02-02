@@ -46,77 +46,40 @@ namespace Cardgames.Classes
 
             return Cards;
         }
-        public Deck firstDeal(Deck deck, string gameMode, List<Player> listPlayers, BlackJackDealer dealer)
+        public void playerDraw(Player player, int NumOfCards)
         {
             Card tempCard;
-            var playerNumber = 0;
-            switch (gameMode)
+            for(int i = 0; i < NumOfCards; i++)
             {
-                case "blackjack": 
-                    for(int i = 0; i < listPlayers.Count * 2 - 1; i++)
-                    {
-                        tempCard = deck.Cards[0];
-                        deck.Cards.RemoveAt(0);
-                        if (i <= listPlayers.Count - 1)
-                        {
-                            addToPlayerHand(listPlayers[playerNumber], tempCard);
-                        }
-                        else
-                        {
-                            tempCard.CardFaceUp = true;
-                            addToPlayerHand(listPlayers[playerNumber], tempCard);
-                        }
-                        playerNumber++;
-                    }
-                    dealerDraw(deck, dealer, 2);
-                    break;
-                case "gofish":
-                    for (int i = 0; i < listPlayers.Count * 5 - 1; i++)
-                    {
-                        tempCard = deck.Cards[0];
-                        deck.Cards.RemoveAt(0);
-                        addToPlayerHand(listPlayers[playerNumber], tempCard);
-                        playerNumber++;
-                    }
-                    
-                 break;
+                tempCard = this.Cards[0];
+                this.Cards.RemoveAt(0);
+                player.PlayerHand.Add(tempCard);
             }
-            return deck;
         }
         public void dealerDraw(Deck deck, BlackJackDealer dealer, int NumOfCards)
         {
             Card tempCard;
             for (int i = 0; i < NumOfCards; i++)
             {
-                tempCard = deck.Cards[0];
-                deck.Cards.RemoveAt(0);
+                tempCard = this.Cards[0];
+                this.Cards.RemoveAt(0);
                 if (NumOfCards == 2)
                 {
                     if(i == 0)
-                    {                      
-                        addToDealerHand(tempCard, dealer);
+                    {
+                        dealer.DealerHand.Add(tempCard);
                     }
                     else
                     {
                         tempCard.CardFaceUp = true;
-                        addToDealerHand(tempCard, dealer);
+                        dealer.DealerHand.Add(tempCard);
                     }
                 }
                 else
                 {
-                    addToDealerHand(tempCard, dealer);
+                    dealer.DealerHand.Add(tempCard);
                 }
             }
-        }
-
-        //add draw method for individual player, dealer deal
-        public void addToDealerHand(Card card, BlackJackDealer dealer)
-        {
-            dealer.DealerHand.Add(card);
-        }
-        public void addToPlayerHand(Player player, Card card)
-        {
-            player.PlayerHand.Add(card);
         }
         public Deck()
         {

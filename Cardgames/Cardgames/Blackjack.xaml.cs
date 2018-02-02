@@ -25,12 +25,27 @@ namespace Cardgames
         public Player player3;
         public Player player4;
         public Player player5;
+        bool gameOnGoing;
         public bool player1Bet = false;
         public bool player2Bet = false;
         public bool player3Bet = false;
         public bool player4Bet = false;
         public bool player5Bet = false;
         public int counter = 0;
+        public Deck deck;
+        public List<Card> dHand = new List<Card>();
+        public List<Card> dHand_2 = new List<Card>();
+        public List<Card> hand1 = new List<Card>();
+        public List<Card> hand1_2 = new List<Card>();
+        public List<Card> hand2 = new List<Card>();
+        public List<Card> hand2_2 = new List<Card>();
+        public List<Card> hand3 = new List<Card>();
+        public List<Card> hand3_2 = new List<Card>();
+        public List<Card> hand4 = new List<Card>();
+        public List<Card> hand4_2 = new List<Card>();
+        public List<Card> hand5 = new List<Card>();
+        public List<Card> hand5_2 = new List<Card>();
+        public List<Player> gamePlayers = new List<Player>();
         public Blackjack()
         {
             InitializeComponent();
@@ -42,52 +57,99 @@ namespace Cardgames
         public void StartGame(int players)
         {
             SetupPlayerVisibilityBlack(players);
-            //BlackJackDealer dealer = new BlackJackDealer(0, 0);
-            if(players == 5)
+            gameOnGoing = true;
+            deck = new Deck();
+            BlackJackDealer dealer = new BlackJackDealer(dHand, dHand_2);
+            player1 = new Player("Player 1", hand1, hand1_2, 20, 0, 0, false);
+            player2 = new Player("Player 2", hand1, hand1_2, 20, 0, 0, false);
+            player3 = new Player("Player 3", hand1, hand1_2, 20, 0, 0, false);
+            player4 = new Player("Player 4", hand1, hand1_2, 20, 0, 0, false);
+            player5 = new Player("Player 5", hand1, hand1_2, 20, 0, 0, false);
+            if (players == 5)
             {
-
+                player1.Playing = true;
+                player2.Playing = true;
+                player3.Playing = true;
+                player4.Playing = true;
+                player5.Playing = true;
+                gamePlayers.Add(player1);
+                gamePlayers.Add(player2);
+                gamePlayers.Add(player3);
+                gamePlayers.Add(player4);
+                gamePlayers.Add(player5);
+                deck.Deal(deck, "blackjack", true, gamePlayers);
+                TurnRotation(5);
             } else if(players == 4)
             {
-
+                player1.Playing = true;
+                player2.Playing = true;
+                player3.Playing = true;
+                player4.Playing = true;
+                gamePlayers.Add(player1);
+                gamePlayers.Add(player2);
+                gamePlayers.Add(player3);
+                gamePlayers.Add(player4);
+                deck.Deal(deck, "blackjack", true, gamePlayers);
+                TurnRotation(4);
             } else if(players == 3)
             {
-
+                player1.Playing = true;
+                player2.Playing = true;
+                player3.Playing = true;
+                gamePlayers.Add(player1);
+                gamePlayers.Add(player2);
+                gamePlayers.Add(player3);
+                deck.Deal(deck, "blackjack", true, gamePlayers);
+                TurnRotation(3);
             } else if(players == 2)
             {
-
+                player1.Playing = true;
+                player2.Playing = true;
+                gamePlayers.Add(player1);
+                gamePlayers.Add(player2);
+                deck.Deal(deck, "blackjack", true, gamePlayers);
+                TurnRotation(2);
             } else
             {
-
+                player1.Playing = true;
+                gamePlayers.Add(player1);
+                deck.Deal(deck, "blackjack", true, gamePlayers);
+                TurnRotation(1);
             }
         }
         private void TurnRotation(int turns)
         {
-            PlayerListBox.SelectedIndex = counter % turns;
+            //PlayerListBox.SelectedIndex = counter % turns;
             if (counter % turns == 0)
             {
                 Console.WriteLine("player 1 turn");
                 counter++;
             }
-            else if (counter % turns == 1)
+            if (counter % turns == 1)
             {
                 Console.WriteLine("player 2 turn");
                 counter++;
             }
-            else if (counter % turns == 2)
+            if (counter % turns == 2)
             {
                 Console.WriteLine("player 3 turn");
                 counter++;
             }
-            else if (counter % turns == 3)
+            if (counter % turns == 3)
             {
                 Console.WriteLine("plaer 4 turn");
                 counter++;
             }
-            else if (counter % turns == 4)
+            if (counter % turns == 4)
             {
                 Console.WriteLine("player 5 turn");
                 counter++;
-            }    
+            }
+            DealerTurn();
+        }
+        private void DealerTurn()
+        {
+            throw new NotImplementedException();
         }
         private void ChangeTurn()
         {

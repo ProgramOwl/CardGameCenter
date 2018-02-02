@@ -173,6 +173,7 @@ namespace Cardgames
             player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
             player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
             //TurnRotation(2);               
+<<<<<<< HEAD
         }
         private void Player3Game()
         {
@@ -184,6 +185,19 @@ namespace Cardgames
         }
         private void Player4Game()
         {
+=======
+        }                                    
+        private void Player3Game()           
+        {                                    
+            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
+            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
+            player3 = new Player("Player 3", new List<Card>(), 0, 0, 0);
+                                            
+            //TurnRotation(3);              
+        }                                   
+        private void Player4Game()          
+        {                                   
+>>>>>>> 50682ee439cd6a6eb4ac9f7c623c764323b0fc2d
             player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
             player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
             player3 = new Player("Player 3", new List<Card>(), 0, 0, 0);
@@ -253,40 +267,33 @@ namespace Cardgames
                     break;
             }
 
-            //populate player hand with the correct amount of cards
 
         }
 
+            //populate player hand with the correct amount of cards
         public void getNextCards(Player player, int numOfCards)
         {
             for (int i = 0; i < numOfCards; i++)
             {
                 if (goFishDeck.Cards[i] != null)
                 {
-                    //player.CardHand[i] = goFishDeck.Cards[currIndex];
-                    currIndex ++;
+                    //player.PlayerHand.Add(goFishDeck.Cards.DrawCardMethod());
+
                 }
             }
 
-            //removeCards(5);
         }
 
 
+        public void DisplayHand(List<Card> cardsList)
+        {
+            foreach(Card c in cardsList)
+            {
 
+            }
 
-        //public void removeCards(int num)
-        //{
-        //    if (cards != null)
-        //    {
-        //        cards.RemoveRange(0, num);
-        //    }
-        //}
+        }
+
 
     }
 }
-//for (int i = 0; i < 5; i++)
-//{
-//    //player1.PlayerHand[i] = goFishDeck.Cards[i];
-//    player1.PlayerHand[i] = cards[i];
-//}
-//goFishDeck.Cards.Skip(5);

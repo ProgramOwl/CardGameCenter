@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Cardgames.Classes;
 
 namespace Cardgames
 {
@@ -137,11 +136,12 @@ namespace Cardgames
             }
         }
 
-        public void MatchingCards(Card x, Card y)
+        public void MatchingCards(Player p, Card x, Card y)
         {
             if (x.FaceValue == y.FaceValue)
             {
 
+                p.GoFishCounter++;
             }
         }
 

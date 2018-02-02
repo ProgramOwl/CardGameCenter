@@ -24,10 +24,10 @@ namespace Cardgames.Classes
             int cardNumber = 0;
             for(int i = 0; i <= suits.Length - 1; i++)
             {
-                for(int j = 0; j <= ranks.Length - 1; j++)
+                for (int j = 0; j <= ranks.Length - 1; j++)
                 {
                     tempCard = new Card(suits[i], ranks[j], false);
-                    cards[cardNumber] = tempCard;
+                    cards.Add(tempCard);
                     cardNumber++;
                 }
             }
@@ -46,7 +46,7 @@ namespace Cardgames.Classes
 
             return Cards;
         }
-        public Deck firstDeal(Deck deck, string gameMode, List<Player> listPlayers)
+        public Deck firstDeal(Deck deck, string gameMode, List<Player> listPlayers, BlackJackDealer dealer)
         {
             Card tempCard;
             var playerNumber = 0;
@@ -67,8 +67,9 @@ namespace Cardgames.Classes
                             addToPlayerHand(listPlayers[playerNumber], tempCard);
                         }
                         playerNumber++;
-                    }    
-                 break;
+                    }
+                    dealerDraw(deck, dealer, 2);
+                    break;
                 case "gofish":
                     for (int i = 0; i < listPlayers.Count * 5 - 1; i++)
                     {
@@ -82,6 +83,32 @@ namespace Cardgames.Classes
             }
             return deck;
         }
+        public void dealerDraw(Deck deck, BlackJackDealer dealer, int NumOfCards)
+        {
+            Card tempCard;
+            for (int i = 0; i < NumOfCards; i++)
+            {
+                tempCard = deck.Cards[0];
+                deck.Cards.RemoveAt(0);
+                if (NumOfCards == 2)
+                {
+                    if(i == 0)
+                    {                      
+                        addToDealerHand(tempCard, dealer);
+                    }
+                    else
+                    {
+                        tempCard.CardFaceUp = true;
+                        addToDealerHand(tempCard, dealer);
+                    }
+                }
+                else
+                {
+                    addToDealerHand(tempCard, dealer);
+                }
+            }
+        }
+
         //add draw method for individual player, dealer deal
         public void addToDealerHand(Card card, BlackJackDealer dealer)
         {

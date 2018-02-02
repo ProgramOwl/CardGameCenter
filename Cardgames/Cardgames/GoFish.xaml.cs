@@ -25,6 +25,7 @@ namespace Cardgames
         public Player player2;
         public Player player3;
         public Player player4;
+        public List<Player> playersList;
         public Deck goFishDeck;
         public int numOfPlayers;
         public int currIndex = 0;
@@ -33,8 +34,7 @@ namespace Cardgames
         public GoFish()
         {
             InitializeComponent();
-            Setup();
-            DeckSetup();
+            //Setup();
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
@@ -59,16 +59,17 @@ namespace Cardgames
             PlayerListBox.SelectedIndex = (PlayerListBox.SelectedIndex + 1) % NumberOfPlayers;
             CurrentPlayerLabel.Content = "Player " + (PlayerListBox.SelectedIndex + 1) + "'s Trun";
             UpDateOpponentSelector();
-        }            
+        }
         private void UpDateOpponentSelector()
         {
-            int PlayerNumber = PlayerListBox.SelectedIndex+1;
-            OpponentOption1Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +1);
-            OpponentOption2Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +2);
-            OpponentOption3Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +3);
+            int PlayerNumber = PlayerListBox.SelectedIndex + 1;
+            OpponentOption1Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) + 1);
+            OpponentOption2Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) + 2);
+            OpponentOption3Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) + 3);
         }
-        public void Setup()
+        public void Setup(int num)
         {
+            PlayerSetup(num);
             //private ObservableCollection<Player> Players;
             // ObservableCollection<Player> Players = new ObservableCollection<Player>();
             //Create players
@@ -84,9 +85,9 @@ namespace Cardgames
             cardsI[5] = new ImageCard("spade", 4, false);
 
             Playerv2[] Players = new Playerv2[NumberOfPlayers];
-            for(int i=0; i<NumberOfPlayers; i++)
+            for (int i = 0; i < NumberOfPlayers; i++)
             {
-                Players[i] = new Playerv2("Player " + i, cardsI);
+                Players[i] = new Playerv2("Player " + i, cardsI, 0);
             }
             PlayerListBox.ItemsSource = Players;
 
@@ -106,7 +107,8 @@ namespace Cardgames
             {
                 player3Stats.Visibility = Visibility.Visible;
                 player4Stats.Visibility = Visibility.Collapsed;
-            } else if (numberOfPlayers == 4)
+            }
+            else if (numberOfPlayers == 4)
             {
                 player3Stats.Visibility = Visibility.Visible;
                 player4Stats.Visibility = Visibility.Visible;
@@ -117,13 +119,15 @@ namespace Cardgames
             if (numberOfPlayers == 2)
             {
                 OpponentSelector.Visibility = Visibility.Collapsed;
-            } else if (numberOfPlayers == 3)
+            }
+            else if (numberOfPlayers == 3)
             {
                 OpponentSelector.Visibility = Visibility.Visible;
                 OpponentOption1.Visibility = Visibility.Visible;
                 OpponentOption2.Visibility = Visibility.Visible;
                 OpponentOption3.Visibility = Visibility.Collapsed;
-            } else if (numberOfPlayers == 4)
+            }
+            else if (numberOfPlayers == 4)
             {
                 OpponentSelector.Visibility = Visibility.Visible;
                 OpponentOption1.Visibility = Visibility.Visible;
@@ -136,19 +140,14 @@ namespace Cardgames
         {
             if (x.FaceValue == y.FaceValue)
             {
+
                 p.GoFishCounter++;
             }
         }
-        public void DeckSetup()
-        {
-            goFishDeck.FillDeck();
-            //cardArr = goFishDeck.Cards;
-            //cards = new List<Card>(cardArr);
-        }
+
 
         public void PlayerSetup(int players)
         {
-
             if (players == 4)
             {
                 Player4Game();
@@ -166,42 +165,42 @@ namespace Cardgames
                 Player2Game();
             }
 
+
         }
 
         private void Player2Game()
         {
-            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
-            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
+            player1 = new Player("Player 1", new List<Card>(), new List<Card>(), 0, 0, 0);
+            player2 = new Player("Player 2", new List<Card>(), new List<Card>(), 0, 0, 0);
+            playersList.Add(player1);
+            playersList.Add(player2);
+            goFishDeck.Deal(goFishDeck, "gofish", true, playersList);
+
             //TurnRotation(2);               
-<<<<<<< HEAD
         }
         private void Player3Game()
         {
-            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
-            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
-            player3 = new Player("Player 3", new List<Card>(), 0, 0, 0);
+            player1 = new Player("Player 1", new List<Card>(), new List<Card>(), 0, 0, 0);
+            player2 = new Player("Player 2", new List<Card>(), new List<Card>(), 0, 0, 0);
+            player3 = new Player("Player 3", new List<Card>(), new List<Card>(), 0, 0, 0);
+            playersList.Add(player1);
+            playersList.Add(player2);
+            playersList.Add(player3);
+            goFishDeck.Deal(goFishDeck, "gofish", true, playersList);
 
-            //TurnRotation(3);               
+            //TurnRotation(3);              
         }
         private void Player4Game()
         {
-=======
-        }                                    
-        private void Player3Game()           
-        {                                    
-            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
-            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
-            player3 = new Player("Player 3", new List<Card>(), 0, 0, 0);
-                                            
-            //TurnRotation(3);              
-        }                                   
-        private void Player4Game()          
-        {                                   
->>>>>>> 50682ee439cd6a6eb4ac9f7c623c764323b0fc2d
-            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
-            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
-            player3 = new Player("Player 3", new List<Card>(), 0, 0, 0);
-            player4 = new Player("Player 4", new List<Card>(), 0, 0, 0);
+            player1 = new Player("Player 1", new List<Card>(), new List<Card>(), 0, 0, 0);
+            player2 = new Player("Player 2", new List<Card>(), new List<Card>(), 0, 0, 0);
+            player3 = new Player("Player 3", new List<Card>(), new List<Card>(), 0, 0, 0);
+            player4 = new Player("Player 4", new List<Card>(), new List<Card>(), 0, 0, 0);
+            playersList.Add(player1);
+            playersList.Add(player2);
+            playersList.Add(player3);
+            playersList.Add(player4);
+            goFishDeck.Deal(goFishDeck, "gofish", true, playersList);
 
             //TurnRotation(4);               
         }
@@ -220,7 +219,7 @@ namespace Cardgames
 
         }
         /// <summary>
-        /// Called by DrawACard(), removes next card object from the deck
+        /// Gives current player next avail
         /// </summary>
         public void nextCard(Player player)
         {
@@ -229,7 +228,8 @@ namespace Cardgames
             //else remove next card in the deck
             if (goFishDeck.Cards.Count > 0)
             {
-                getNextCards(player, 1);
+                //goFishDeck.addToPlayerHand(player,goFishDeck.Deal(goFishDeck,"gofish",false,))
+                //getNextCards(player, 1);
                 //player.CardHand.Add(cards.First());
             }
             else
@@ -238,58 +238,13 @@ namespace Cardgames
             }
 
         }
-        /// <summary>
-        /// Should set up a players hands with cards.
-        /// </summary>
-        public void initialPlayerHand()
+
+
+        public void DisplayPlayerHand(Player player)
         {
-            switch (numOfPlayers)
+            foreach (Card c in player.PlayerHand)
             {
-                case 2:
-                    getNextCards(player1, 5);
-
-                    getNextCards(player2, 5);
-
-                    break;
-
-                case 3:
-                    getNextCards(player1, 5);
-                    getNextCards(player2, 5);
-                    getNextCards(player3, 5);
-
-                    break;
-                case 4:
-                    getNextCards(player1, 5);
-                    getNextCards(player2, 5);
-                    getNextCards(player3, 5);
-                    getNextCards(player4, 5);
-
-                    break;
-            }
-
-
-        }
-
-            //populate player hand with the correct amount of cards
-        public void getNextCards(Player player, int numOfCards)
-        {
-            for (int i = 0; i < numOfCards; i++)
-            {
-                if (goFishDeck.Cards[i] != null)
-                {
-                    //player.PlayerHand.Add(goFishDeck.Cards.DrawCardMethod());
-
-                }
-            }
-
-        }
-
-
-        public void DisplayHand(List<Card> cardsList)
-        {
-            foreach(Card c in cardsList)
-            {
-
+                //connection to gui?????????
             }
 
         }

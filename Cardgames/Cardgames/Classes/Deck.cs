@@ -67,6 +67,10 @@ namespace Cardgames.Classes
                             addToPlayerHand(listPlayers[playerNumber], tempCard);
                         }
                         playerNumber++;
+                        if(playerNumber == listPlayers.Count)
+                        {
+                            playerNumber = 0;
+                        }
                     }
                     dealerDraw(dealer, 2);
                     break;
@@ -77,6 +81,10 @@ namespace Cardgames.Classes
                         this.Cards.RemoveAt(0);
                         addToPlayerHand(listPlayers[playerNumber], tempCard);
                         playerNumber++;
+                        if (playerNumber == listPlayers.Count)
+                        {
+                            playerNumber = 0;
+                        }
                     }
                     
                  break;

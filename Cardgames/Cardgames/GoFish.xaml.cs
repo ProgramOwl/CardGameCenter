@@ -12,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Cardgames.Classes;
 
 namespace Cardgames
 {
@@ -68,7 +67,7 @@ namespace Cardgames
             OpponentOption2Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +2);
             OpponentOption3Label.Content = "Player " + ((PlayerNumber % NumberOfPlayers) +3);
         }
-        private void Setup()
+        public void Setup()
         {
             //private ObservableCollection<Player> Players;
             // ObservableCollection<Player> Players = new ObservableCollection<Player>();
@@ -133,11 +132,11 @@ namespace Cardgames
             }
         }
 
-        public void MatchingCards(Card x, Card y)
+        public void MatchingCards(Player p, Card x, Card y)
         {
             if (x.FaceValue == y.FaceValue)
             {
-                
+                p.GoFishCounter++;
             }
         }
         public void DeckSetup()
@@ -174,6 +173,19 @@ namespace Cardgames
             player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
             player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
             //TurnRotation(2);               
+<<<<<<< HEAD
+        }
+        private void Player3Game()
+        {
+            player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
+            player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
+            player3 = new Player("Player 3", new List<Card>(), 0, 0, 0);
+
+            //TurnRotation(3);               
+        }
+        private void Player4Game()
+        {
+=======
         }                                    
         private void Player3Game()           
         {                                    
@@ -185,6 +197,7 @@ namespace Cardgames
         }                                   
         private void Player4Game()          
         {                                   
+>>>>>>> 50682ee439cd6a6eb4ac9f7c623c764323b0fc2d
             player1 = new Player("Player 1", new List<Card>(), 0, 0, 0);
             player2 = new Player("Player 2", new List<Card>(), 0, 0, 0);
             player3 = new Player("Player 3", new List<Card>(), 0, 0, 0);

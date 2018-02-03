@@ -423,79 +423,82 @@ namespace Cardgames
         private void RoundEndCalculations()
         {
             //figure out winning hands and update banks
-            for(int i=0; i<NumberOfPlayers; i++)
+            for (int i = 0; i < NumberOfPlayers; i++)
             {
-                int score = HandScore(PlayerList[i].PlayerHand);
-                List<Card> dealerH = dealer.DealerHand;
-                int dealerScore = HandScore(dealerH);
-                if (CheckForBust(score))
+                if (PlayerList[i].Playing)
                 {
-                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
-                }
-                else if (CheckFor5CardCharlie(PlayerList[i].PlayerHand))
-                {
-                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 3);
-                }
-                else if (CheckForBlackjack(dealerScore, dealerH) && CheckForBlackjack(score, PlayerList[i].PlayerHand2))
-                {
-                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank;
-                }
-                else if (CheckForBlackjack(score, PlayerList[i].PlayerHand2))
-                {
-                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 2);
-                }
-                else if (CheckForBlackjack(dealerScore, dealerH))
-                {
-                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
-                }
-                else if (dealerScore > 21)
-                {
-                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 2);
-                }
-                else
-                {
-                    if (score > dealerScore)
-                    {
-                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 1);
-                    }
-                    else if (score == dealerScore)
-                    {
-                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank;
-                    }
-                    else
-                    {
-                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
-                    }
-                }
-                
-                if (PlayerList[i].PlayerHand2.Count > 1)
-                {
-                    score = HandScore(PlayerList[i].PlayerHand2);
+                    int score = HandScore(PlayerList[i].PlayerHand);
+                    List<Card> dealerH = dealer.DealerHand;
+                    int dealerScore = HandScore(dealerH);
                     if (CheckForBust(score))
                     {
                         PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
                     }
-                    else if (CheckFor5CardCharlie(PlayerList[i].PlayerHand2))
+                    else if (CheckFor5CardCharlie(PlayerList[i].PlayerHand))
                     {
-                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 4);
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 3);
+                    }
+                    else if (CheckForBlackjack(dealerScore, dealerH) && CheckForBlackjack(score, PlayerList[i].PlayerHand2))
+                    {
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank;
                     }
                     else if (CheckForBlackjack(score, PlayerList[i].PlayerHand2))
                     {
-                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 3);
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 2);
+                    }
+                    else if (CheckFor5CardCharlie(dealerH)|| CheckForBlackjack(dealerScore, dealerH))
+                    {
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
+                    }
+                    else if (dealerScore > 21)
+                    {
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + PlayerList[i].Bet;
                     }
                     else
                     {
                         if (score > dealerScore)
                         {
-                            PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 2);
+                            PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 1);
                         }
                         else if (score == dealerScore)
                         {
-                            PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet);
+                            PlayerList[i].PlayerBank = PlayerList[i].PlayerBank;
                         }
                         else
                         {
                             PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
+                        }
+                    }
+
+                    if (PlayerList[i].PlayerHand2.Count > 1)
+                    {
+                        score = HandScore(PlayerList[i].PlayerHand2);
+                        if (CheckForBust(score))
+                        {
+                            PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
+                        }
+                        else if (CheckFor5CardCharlie(PlayerList[i].PlayerHand2))
+                        {
+                            PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 4);
+                        }
+                        else if (CheckForBlackjack(score, PlayerList[i].PlayerHand2))
+                        {
+                            PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 3);
+                        }
+                        else
+                        {
+                            if (score > dealerScore)
+                            {
+                                PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 2);
+                            }
+                            else if (score == dealerScore)
+                            {
+                                PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet);
+                            }
+                            else
+                            {
+                                PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
+                            }
                         }
                     }
                 }
@@ -659,6 +662,10 @@ namespace Cardgames
 
             PlayerListBox.SelectedIndex = NumberOfPlayers - 1;
             ChangePlayer();
+            int indexT = PlayerListBox.SelectedIndex;
+            PlayerListBox.ItemsSource = null;
+            PlayerListBox.ItemsSource = PlayerList;
+            PlayerListBox.SelectedIndex = indexT;
         }
 
         private void SplitButton_Click(object sender, RoutedEventArgs e)

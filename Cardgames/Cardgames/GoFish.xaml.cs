@@ -53,6 +53,17 @@ namespace Cardgames
             
             PlayerListBox.ItemsSource = PlayerList;
             PlayerListBox.SelectedIndex = 0;
+            for (int i = 0; i < NumberOfPlayers; i++)
+            {
+                for (int t = 0; t < PlayerList[i].PlayerHand.Count; t++)
+                {
+                    PlayerList[i].PlayerHand[t].CardFaceUp = true;
+                }
+            }
+            int indexT = PlayerListBox.SelectedIndex;
+            PlayerListBox.ItemsSource = null;
+            PlayerListBox.ItemsSource = PlayerList;
+            PlayerListBox.SelectedIndex = indexT;
             CurrentPlayerLabel.Content = PlayerList[PlayerListBox.SelectedIndex].Name + "'s Turn";
             CoverPanel.Visibility = Visibility.Collapsed;
             Updatescores();
@@ -150,11 +161,11 @@ namespace Cardgames
             List<Card> cards2 = new List<Card>();
             List<Card> cards3 = new List<Card>();
             List<Card> cards4 = new List<Card>();
-            for (int t = 0; t < 5; t++)
-            {
-                cards1.Add(goFishDeck.drawCard());//[t].CardFaceUp = true;
-                cards2.Add(goFishDeck.drawCard());
-            }
+            //for (int t = 0; t < 5; t++)
+            //{
+            //    cards1.Add(goFishDeck.drawCard());//[t].CardFaceUp = true;
+            //    cards2.Add(goFishDeck.drawCard());
+            //}
             PlayerList.Add(new Player("Player 1", cards1));
             PlayerList.Add(new Player("Player 2", cards2));
             player1Points.Content = PlayerList[0].GoFishCounter;
@@ -162,11 +173,11 @@ namespace Cardgames
 
             if (NumberOfPlayers == 4)
             {
-                for (int t = 0; t < 5; t++)
-                {
-                    cards3.Add(goFishDeck.drawCard());//[t].CardFaceUp = true;
-                    cards4.Add(goFishDeck.drawCard());
-                }
+                //for (int t = 0; t < 5; t++)
+                //{
+                //    cards3.Add(goFishDeck.drawCard());//[t].CardFaceUp = true;
+                //    cards4.Add(goFishDeck.drawCard());
+                //}
                 PlayerList.Add(new Player("Player 3", cards3));
                 PlayerList.Add(new Player("Player 4", cards4));
                 player3Points.Content = PlayerList[2].GoFishCounter;
@@ -174,12 +185,16 @@ namespace Cardgames
             }
             else if (NumberOfPlayers == 3)
             {
-                for (int t = 0; t < 5; t++)
-                {
-                    cards3.Add(goFishDeck.drawCard());
-                }
+                //for (int t = 0; t < 5; t++)
+                //{
+                //    cards3.Add(goFishDeck.drawCard());
+                //}
                 PlayerList.Add(new Player("Player 3", cards3));
                 player3Points.Content = PlayerList[2].GoFishCounter;
+            }
+            for (int i = 0; i < NumberOfPlayers; i++)
+            {
+                goFishDeck.playerDraw(PlayerList[i], 5);
             }
 
             //for (int i = 0; i < PlayerList.Count; i++)
@@ -283,6 +298,17 @@ namespace Cardgames
                             }
                         }
                     }
+                    for (int i = 0; i < NumberOfPlayers; i++)
+                    {
+                        for (int t = 0; t < PlayerList[i].PlayerHand.Count; t++)
+                        {
+                            PlayerList[i].PlayerHand[t].CardFaceUp = true;
+                        }
+                    }
+                    int indexT = PlayerListBox.SelectedIndex;
+                    PlayerListBox.ItemsSource = null;
+                    PlayerListBox.ItemsSource = PlayerList;
+                    PlayerListBox.SelectedIndex = indexT;
                     TurnChange();
                     CoverPanel.Visibility = Visibility.Visible;
                 }

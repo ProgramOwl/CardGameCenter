@@ -113,7 +113,8 @@ namespace Cardgames.Classes
             {
                 tempCard = this.Cards[0];
                 this.Cards.RemoveAt(0);
-                player.PlayerHand.Add(tempCard);
+                //player.PlayerHand.Add(tempCard);
+                addToPlayerHand(player, tempCard);
             }
         }
         public void dealerDraw(BlackJackDealer dealer, int NumOfCards)
@@ -163,10 +164,12 @@ namespace Cardgames.Classes
         //draw, Sam
         public Card drawCard()
         {
-            Card temp = this.Cards[rand.Next(0, this.Cards.Count)];
-            this.Cards.Remove(temp);
-            temp.CardFaceUp = true;
-            return temp;
+            //Card temp = this.Cards[rand.Next(0, this.Cards.Count)];
+            //this.Cards.Remove(temp);
+            //temp.CardFaceUp = true;
+            Card tempCard = this.Cards[0];
+            this.Cards.RemoveAt(0);
+            return tempCard;
         }
     }
 }

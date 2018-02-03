@@ -243,6 +243,10 @@
                                     <Button x:Name="BetSelectedButton" Content="Bet"
                                 Style="{StaticResource FormButtonStyle}" Click="BetSelectedButton_Click"/>
                                 </StackPanel>
+                                <StackPanel Background="{StaticResource AluBack}" Width="120" Height="30" Margin="2">
+                                    <Button x:Name="QuitButton" Content="Quit"
+                                Style="{StaticResource FormButtonStyle}" Click="QuitButton_Click"/>
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                         <!--<StackPanel x:Name="NextRoundPanelSub"  Margin="0" Visibility="Collapsed">-->

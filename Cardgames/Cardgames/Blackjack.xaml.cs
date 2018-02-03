@@ -113,8 +113,9 @@ namespace Cardgames
         }
         private void NewDealer()
         {
-            List<Card> EmptyCards = new List<Card>();
-            dealer = new BlackJackDealer(EmptyCards, 0);
+            List<Card> cardsDealer = new List<Card>(); 
+            List<Card> cardsDealer2 = new List<Card>(); 
+             dealer = new BlackJackDealer(cardsDealer, cardsDealer2);
             blackJackDeck.dealerDraw(dealer, 2);
             HouseCardList_ListBox.ItemsSource = null;
             HouseCardList_ListBox.ItemsSource = dealer.DealerHand;
@@ -165,6 +166,7 @@ namespace Cardgames
             List<Card> cards4 = new List<Card>();
             List<Card> cards5 = new List<Card>();
             List<Card> cardsDealer = new List<Card>();
+            List<Card> cardsDealer2 = new List<Card>();
             cards1.Add(new Card(CardSuit.Clubs, CardValue.Ace, true));
             cards1.Add(new Card(CardSuit.Spades, CardValue.Six, true));
             cards2.Add(new Card(CardSuit.Clubs, CardValue.Two, true));
@@ -178,7 +180,7 @@ namespace Cardgames
             cardsDealer.Add(new Card(CardSuit.Hearts, CardValue.Three, true));
             cardsDealer.Add(new Card(CardSuit.Diamonds, CardValue.Four, true));
 
-            dealer = new BlackJackDealer(cardsDealer, 0);
+            dealer = new BlackJackDealer(cardsDealer, cardsDealer2);
             HouseCardList_ListBox.ItemsSource = dealer.DealerHand;
 
             PlayerList.Add(new Player("Player 1", cards1));
@@ -380,10 +382,16 @@ namespace Cardgames
             }
         }
         private void Hand1Turn()
-        {            
+        {  
             for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count; t++)
             {
                 PlayerList[PlayerListBox.SelectedIndex].PlayerHand[t].CardFaceUp = true;
+            }
+            int score = HandScore(PlayerList[PlayerListBox.SelectedIndex].PlayerHand);
+            if (CheckForBlackjack(score, PlayerList[PlayerListBox.SelectedIndex].PlayerHand))
+            {
+                //end turn due to meeting a known end hand
+                NextMove();
             }
             UpdateCards();
 
@@ -394,12 +402,12 @@ namespace Cardgames
         }
         private void DealerHandTurn()
         {
-            dealer.DealerScore = HandScore(dealer.DealerHand);
-            while ( dealer.DealerScore < 17 && blackJackDeck.Cards.Count > 0)
+            int dealerScore = HandScore(dealer.DealerHand);
+            while (dealerScore < 17 && blackJackDeck.Cards.Count > 0)
             {
                 //add to 
                 blackJackDeck.dealerDraw(dealer, 1);
-                dealer.DealerScore = HandScore(dealer.DealerHand);
+                dealerScore = HandScore(dealer.DealerHand);
             }
             for(int i=0; i < dealer.DealerHand.Count; i++)
             {
@@ -418,27 +426,41 @@ namespace Cardgames
             for(int i=0; i<NumberOfPlayers; i++)
             {
                 int score = HandScore(PlayerList[i].PlayerHand);
+                List<Card> dealerH = dealer.DealerHand;
+                int dealerScore = HandScore(dealerH);
                 if (CheckForBust(score))
                 {
                     PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
                 }
-                else if (CheckForFive(PlayerList[i].PlayerHand))
-                {
-                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 4);
-                }
-                else if (CheckForBlackjack(score))
+                else if (CheckFor5CardCharlie(PlayerList[i].PlayerHand))
                 {
                     PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 3);
                 }
+                else if (CheckForBlackjack(dealerScore, dealerH) && CheckForBlackjack(score, PlayerList[i].PlayerHand2))
+                {
+                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank;
+                }
+                else if (CheckForBlackjack(score, PlayerList[i].PlayerHand2))
+                {
+                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 2);
+                }
+                else if (CheckForBlackjack(dealerScore, dealerH))
+                {
+                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
+                }
+                else if (dealerScore > 21)
+                {
+                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 2);
+                }
                 else
                 {
-                    if (score > dealer.DealerScore)
+                    if (score > dealerScore)
                     {
-                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 2);
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 1);
                     }
-                    else if (score == dealer.DealerScore)
+                    else if (score == dealerScore)
                     {
-                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet);
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank;
                     }
                     else
                     {
@@ -453,21 +475,21 @@ namespace Cardgames
                     {
                         PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
                     }
-                    else if (CheckForFive(PlayerList[i].PlayerHand2))
+                    else if (CheckFor5CardCharlie(PlayerList[i].PlayerHand2))
                     {
                         PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 4);
                     }
-                    else if (CheckForBlackjack(score))
+                    else if (CheckForBlackjack(score, PlayerList[i].PlayerHand2))
                     {
                         PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 3);
                     }
                     else
                     {
-                        if (score > dealer.DealerScore)
+                        if (score > dealerScore)
                         {
                             PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 2);
                         }
-                        else if (score == dealer.DealerScore)
+                        else if (score == dealerScore)
                         {
                             PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet);
                         }
@@ -480,7 +502,7 @@ namespace Cardgames
             }
             UpdateBanks();
         }
-        private bool CheckForFive(List<Card> hand)
+        private bool CheckFor5CardCharlie(List<Card> hand)
         {
             if (hand.Count == 5)
             {
@@ -498,9 +520,9 @@ namespace Cardgames
             }
             return false;
         }
-        private bool CheckForBlackjack(int score)
+        private bool CheckForBlackjack(int score, List<Card> hand)
         {
-            if (score == 21)
+            if (score == 21 && hand.Count==2)
             {
                 CauseOfTurnEnd.Content = "Blackjack";
                 return true;
@@ -679,6 +701,7 @@ namespace Cardgames
                     {
                         PlayerList[PlayerListBox.SelectedIndex].PlayerHand2[t].CardFaceUp = true;
                     }
+                    HandScore(PlayerList[PlayerListBox.SelectedIndex].PlayerHand2);
                 }
                 else
                 {
@@ -696,7 +719,7 @@ namespace Cardgames
                 UpdateCards();
                 //Check for should turn end
                 int score = HandScore(hand);
-                if (CheckForBust(score) || CheckForFive(hand) || CheckForBlackjack(score))
+                if (CheckForBust(score) || CheckFor5CardCharlie(hand))
                 {
                     //end turn due to meeting a known end hand
                     NextMove();

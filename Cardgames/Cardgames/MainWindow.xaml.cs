@@ -61,11 +61,7 @@ namespace Cardgames
         private void StartGoFishButton_Click(object sender, RoutedEventArgs e)
         {
             int number = AmountOfPlayersGo.SelectedIndex+2;
-            //call to page
-            //return 
-            //new GoFish {DataContext=number}.Show();
-
-            goFishWindow.Setup();
+            goFishWindow.Setup(number);
             goFishWindow.Show();
             this.Close();
         }
@@ -76,7 +72,6 @@ namespace Cardgames
             blackJackWindow.Setup(number);
             blackJackWindow.Show();
             this.Close();
-            //call to page
         }
         public void DeckFillTest()
         {

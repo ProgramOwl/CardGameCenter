@@ -54,8 +54,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\ImageCard.cs" />
-    <Compile Include="Classes\Playerv2.cs" />
     <Compile Include="UserControlsi\CardDisplay.xaml.cs">
       <DependentUpon>CardDisplay.xaml</DependentUpon>
     </Compile>

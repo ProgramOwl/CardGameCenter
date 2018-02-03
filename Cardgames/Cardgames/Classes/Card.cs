@@ -92,7 +92,7 @@ namespace Cardgames.Classes
             this.CardFaceUp = isFaceUp;
             string suitStringRaw = suit.ToString();
             string suitString = suitStringRaw.Substring(0, 1).ToUpper() + suitStringRaw.Substring(1, suitStringRaw.Length - 2).ToLower();
-            int faceValueInt = (int)this.FaceValue;
+            int faceValueInt = (int)this.FaceValue + 1;
             this.cardName = ValueToCard(faceValueInt) + " of " + suitString;
             this.cardFaceUp = isFaceUp;
             this.CardBack = "/Images/Cards/CardBack.png";

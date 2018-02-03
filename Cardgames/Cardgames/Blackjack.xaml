@@ -144,35 +144,35 @@
                     <Label Content="Player 1" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Bank:  $" Style="{StaticResource PlayerInfoStyle}" Width="55"/>
-                        <Label x:Name="player1Bank" Content="{Binding ElementName=PlayerListBox[1], Path=PlayerBank}" Style="{StaticResource PlayerInfoStyle}" Width="45"/>
+                        <Label x:Name="player1Bank" Content="20" Style="{StaticResource PlayerInfoStyle}" Padding="0" Width="45"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player2Stats" Orientation="Vertical">
                     <Label Content="Player 2" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Bank:  $" Style="{StaticResource PlayerInfoStyle}" Width="55"/>
-                        <Label x:Name="player2Bank" Content="{Binding ElementName=PlayerListBox[2], Path=PlayerBank}" Style="{StaticResource PlayerInfoStyle}" Width="45"/>
+                        <Label x:Name="player2Bank" Content="20" Style="{StaticResource PlayerInfoStyle}" Padding="0" Width="45"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player3Stats" Orientation="Vertical">
                     <Label Content="Player 3" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal" >
                         <Label Content="Bank:  $" Style="{StaticResource PlayerInfoStyle}" Width="55"/>
-                        <Label x:Name="player3Bank" Content="{Binding ElementName=PlayerListBox[3], Path=PlayerBank}" Style="{StaticResource PlayerInfoStyle}" Width="45"/>
+                        <Label x:Name="player3Bank" Content="20" Style="{StaticResource PlayerInfoStyle}" Padding="0" Width="45"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player4Stats" Orientation="Vertical">
                     <Label Content="Player 4" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Bank:  $" Style="{StaticResource PlayerInfoStyle}" Width="55"/>
-                        <Label x:Name="player4Bank" Content="{Binding ElementName=PlayerListBox[4], Path=PlayerBank}" Style="{StaticResource PlayerInfoStyle}" Width="45"/>
+                        <Label x:Name="player4Bank" Content="20" Style="{StaticResource PlayerInfoStyle}" Padding="0" Width="45"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player5Stats" Orientation="Vertical">
                     <Label Content="Player 5" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Bank:  $" Style="{StaticResource PlayerInfoStyle}" Width="55"/>
-                        <Label x:Name="player5Bank" Content="{Binding ElementName=PlayerListBox[5], Path=PlayerBank}" Style="{StaticResource PlayerInfoStyle}" Width="45"/>
+                        <Label x:Name="player5Bank" Content="20" Style="{StaticResource PlayerInfoStyle}" Padding="0" Width="45"/>
                     </StackPanel>
                 </StackPanel>
                 <ListBox x:Name="PlayerListBox" Visibility="Collapsed" ScrollViewer.CanContentScroll="False"
@@ -194,6 +194,7 @@
                         </StackPanel>
                         <StackPanel x:Name="TurnSelection" Visibility="Collapsed">
                             <Label Content="Pick a move:" Style="{StaticResource BasicTextStyle}" Margin="2"/>
+                            <Label x:Name="HandPoints"  Content="Points" Style="{StaticResource BasicTextStyle}" Margin="2"/>
                             <StackPanel Orientation="Vertical">                                
                                 <StackPanel Background="{StaticResource AluBack}" Width="120" Height="30" Margin="2">
                                     <Button x:Name="HitButton" Content="Hit"
@@ -205,10 +206,18 @@
                                 Style="{StaticResource FormButtonStyle}"
                                 Click="StayButton_Click"/>
                                 </StackPanel>
-                                <StackPanel x:Name="SplitBox" Background="{StaticResource AluBack}" Width="120" Height="30" Margin="2">
-                                    <Button x:Name="SplitButton" Content="Split"
-                                Style="{StaticResource FormButtonStyle}"
+                                <StackPanel  Visibility="Collapsed"  x:Name="SplitBox" Background="{StaticResource AluBack}" Width="120" Height="30" Margin="2">
+                                    <Button x:Name="SplitButton" Content="Split" Style="{StaticResource FormButtonStyle}"
                                 Click="SplitButton_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel x:Name="NextPlayerPanel" Margin="0" Visibility="Collapsed">
+                            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 10">
+                                <Label x:Name="CauseOfTurnEnd" Content="Stayed" Style="{StaticResource BasicTextStyle}"/>
+                                <StackPanel x:Name="NextPlayerButtonPanel" Background="{StaticResource AluBack}" Width="120" Height="30" Margin="2">
+                                    <Button x:Name="NextPlayerButton" Content="Next Player"
+                                Style="{StaticResource FormButtonStyle}" Click="NextPlayerButton_Click"/>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
@@ -236,43 +245,57 @@
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
+                        <!--<StackPanel x:Name="NextRoundPanelSub"  Margin="0" Visibility="Collapsed">-->
+                            <!--<StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 10">
+                                <StackPanel Background="{StaticResource AluBack}" Width="120" Height="30" Margin="2">
+                                    <Button x:Name="NextRoundButton" Content="Next Round"
+                                Style="{StaticResource FormButtonStyle}" Click="NextRoundButton_Click"/>
+                                </StackPanel>
+                            </StackPanel>-->
+                        <!--</StackPanel>-->
                     </StackPanel>
                     <!--House Hand-->
                     <StackPanel Grid.Column="1" x:Name="HousePanel">
                         <StackPanel Background="Black" VerticalAlignment="Top">
                             <Label Style="{StaticResource TitleStyle}">House Cards</Label>
                         </StackPanel>
-                       
-                                    <Viewbox>
-                        <StackPanel x:Name="HouseCards"  HorizontalAlignment="Left" Margin="5"
+                        <Viewbox>
+                            <StackPanel x:Name="HouseCards"  HorizontalAlignment="Left" Margin="5"
                                     Visibility="Visible" Background="Transparent" Orientation="Horizontal">
-                            <!--ScrollViewer.HorizontalScrollMode="Enabled"-->
-
-                            <ListBox x:Name="HouseCardList_ListBox" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" MinHeight="252" Width="540" ScrollViewer.IsDeferredScrollingEnabled="False"
-                     SelectionMode="Single" Background="{StaticResource HoverGreen}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
-                         ItemsSource="{Binding ElementName=PlayerListBox[0], Path=PlayerHand}">
-                                     <!--{Binding BlackJackDealer.DealerHand}">-->
-                                <ListBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <uc:CardDisplay Margin="1"/>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </StackPanel>
+                                <!--ScrollViewer.HorizontalScrollMode="Enabled"-->
+                                <ListBox x:Name="HouseCardList_ListBox" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" MinHeight="252" Width="540" ScrollViewer.IsDeferredScrollingEnabled="False"
+                         SelectionMode="Single" Background="{StaticResource HoverGreen}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
+                                    <!--ItemsSource="{Binding BlackJackDealer.DealerHand}"{Binding ElementName=PlayerListBox[0], Path=PlayerHand}>-->
+                                    <ListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ListBox.ItemsPanel>
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <uc:CardDisplay Margin="1"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
                         </Viewbox>
                     </StackPanel>
                 </Grid>
+
+                <StackPanel Grid.Row="1" x:Name="NextRoundPanel" Visibility="Collapsed" Margin="0" Background="Black" VerticalAlignment="Stretch">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 50 0 300">
+                        <StackPanel Background="{StaticResource AluBack}" Width="250" Height="30" Margin="2">
+                            <Button x:Name="NextRoundButton" Content="Move on to next Round" Width="250" Height="30"
+                                Style="{StaticResource FormButtonStyle}" Click="NextRoundButton_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
                 <!--Player's Hand-->
                 <StackPanel Grid.Row="1" x:Name="PlayerCardDisplaySection">
                     <StackPanel Background="Black">
                         <Label x:Name="activePlayerLabel" Style="{StaticResource TitleStyle}">Your Cards</Label>
                     </StackPanel>
-                        <Viewbox>
+                    <Viewbox>
                         <StackPanel x:Name="ActiveCards" HorizontalAlignment="Left" Margin="5"
                                     Visibility="Visible" Background="Transparent" Orientation="Horizontal">
                             <ListBox x:Name="CardList_ListBox" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" MinHeight="252" Width="840" ScrollViewer.IsDeferredScrollingEnabled="False"
@@ -291,6 +314,38 @@
                                 </ListBox>
                             </StackPanel>
                         </Viewbox>
+                </StackPanel>
+                <!--Player's Split Hand-->
+                <StackPanel Grid.Row="1" x:Name="PlayerSplitCardDisplaySection" Visibility="Collapsed">
+                    <Viewbox>
+                        <StackPanel x:Name="SplitActiveCards" HorizontalAlignment="Left" Margin="5"
+                                    Visibility="Visible" Background="Transparent" Orientation="Horizontal">
+                            <ListBox x:Name="SplitCardList_ListBox" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" MinHeight="252" Width="840" ScrollViewer.IsDeferredScrollingEnabled="False"
+                     SelectionMode="Single" Background="{StaticResource HoverGreen}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
+                         ItemsSource="{Binding ElementName=PlayerListBox, Path=SelectedItem.PlayerHand2}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <uc:CardDisplay Margin="1"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </Viewbox>
+                </StackPanel>
+            </StackPanel>
+            <!--GameOverPanel-->
+            <StackPanel Grid.Column="1" x:Name="GameOverPanel" Visibility="Collapsed" Background="{StaticResource BlackBack}">
+                <StackPanel Margin="20">
+                    <StackPanel Background="{StaticResource AluBack}" Width="150" Height="30" Margin="5">
+                        <Button x:Name="ReturnToMenuButton" Content="Return to Home"
+                                Style="{StaticResource FormButtonStyle}" Width="150"
+                                Click="ReturnToMenuButton_Click"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </Grid>

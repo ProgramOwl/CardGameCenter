@@ -14,108 +14,114 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace Cardgames
-{
+{//Issues: Getting card visibility to work with one player, and getting dealer to show their hand
+    //Game over doesn't exist yet(use a how many players are playing system and update Playing)
+
     /// <summary>
     /// Interaction logic for Blackjack.xaml
     /// </summary>
     public partial class Blackjack : Window
     {
-        public Player player1;
-        public Player player2;
-        public Player player3;
-        public Player player4;
-        public Player player5;
-        public bool player1Bet = false;
-        public bool player2Bet = false;
-        public bool player3Bet = false;
-        public bool player4Bet = false;
-        public bool player5Bet = false;
-        public int counter = 0;
+        public BlackJackDealer dealer;
+        public List<Player> PlayerList;
+        public Deck blackJackDeck;
+        //public int counter = 1;
+        public int NumberOfPlayers = 1;
+
+        //Testing values
+        public bool hasSplit = false;
+        public bool onHand2 = false;
+
         public Blackjack()
         {
             InitializeComponent();
         }
-        private void Close_Click(object sender, RoutedEventArgs e)
+        //Inialization_Setup
+        public void Setup(int players)
         {
-            Application.Current.Shutdown();
+            blackJackDeck = new Deck();
+            PlayerList = new List<Player>();
+            NumberOfPlayers = players;
+            //TestingMethod();
+            SetupPlayerVisibilityBlack(NumberOfPlayers);
+            NewDealer();
+            StartGame(NumberOfPlayers);
+            //After handing players cards
+            //UpdateBanks();
+            //FaceDownFirstCard();
         }
         public void StartGame(int players)
         {
-            SetupPlayerVisibilityBlack(players);
-            //BlackJackDealer dealer = new BlackJackDealer(0, 0);
-            if(players == 5)
-            {
+            List<Card> Cards1 = new List<Card>();
+            PlayerList.Add(new Player("Player 1", Cards1));
+            player1Bank.Content = PlayerList[0].PlayerBank;
 
-            } else if(players == 4)
+            if (NumberOfPlayers == 5)
             {
-
-            } else if(players == 3)
-            {
-
-            } else if(players == 2)
-            {
-
-            } else
-            {
-
+                List<Card> Cards2 = new List<Card>();
+                List<Card> Cards3 = new List<Card>();
+                List<Card> Cards4 = new List<Card>();
+                List<Card> Cards5 = new List<Card>();
+                PlayerList.Add(new Player("Player 2", Cards2));
+                PlayerList.Add(new Player("Player 3", Cards3));
+                PlayerList.Add(new Player("Player 4", Cards4));
+                PlayerList.Add(new Player("Player 5", Cards5));
+                player3Bank.Content = PlayerList[1].PlayerBank;
+                player3Bank.Content = PlayerList[2].PlayerBank;
+                player4Bank.Content = PlayerList[3].PlayerBank;
+                player5Bank.Content = PlayerList[4].PlayerBank;
             }
-        }
-        private void TurnRotation(int turns)
-        {
-            PlayerListBox.SelectedIndex = counter % turns;
-            if (counter % turns == 0)
+            else if (NumberOfPlayers == 4)
             {
-                Console.WriteLine("player 1 turn");
-                counter++;
+                List<Card> Cards2 = new List<Card>();
+                List<Card> Cards3 = new List<Card>();
+                List<Card> Cards4 = new List<Card>();
+                PlayerList.Add(new Player("Player 2", Cards2));
+                PlayerList.Add(new Player("Player 3", Cards3));
+                PlayerList.Add(new Player("Player 4", Cards4));
+                player3Bank.Content = PlayerList[1].PlayerBank;
+                player3Bank.Content = PlayerList[2].PlayerBank;
+                player4Bank.Content = PlayerList[3].PlayerBank;
             }
-            else if (counter % turns == 1)
+            else if (NumberOfPlayers == 3)
             {
-                Console.WriteLine("player 2 turn");
-                counter++;
+                List<Card> Cards2 = new List<Card>();
+                List<Card> Cards3 = new List<Card>();
+                PlayerList.Add(new Player("Player 2", Cards2));
+                PlayerList.Add(new Player("Player 3", Cards3));
+                player2Bank.Content = PlayerList[1].PlayerBank;
+                player3Bank.Content = PlayerList[2].PlayerBank;
             }
-            else if (counter % turns == 2)
+            else if (NumberOfPlayers == 2)
             {
-                Console.WriteLine("player 3 turn");
-                counter++;
+                List<Card> Cards2 = new List<Card>();
+                PlayerList.Add(new Player("Player 2", Cards2));
+                player2Bank.Content = PlayerList[1].PlayerBank;
             }
-            else if (counter % turns == 3)
+            for (int i = 0; i < PlayerList.Count; i++)
             {
-                Console.WriteLine("plaer 4 turn");
-                counter++;
+                blackJackDeck.playerDraw(PlayerList[i], 2);
             }
-            else if (counter % turns == 4)
+            for (int i = 0; i < PlayerList.Count; i++)
             {
-                Console.WriteLine("player 5 turn");
-                counter++;
-            }    
+                PlayerList[i].PlayerHand[0].CardFaceUp = false;
+                PlayerList[i].PlayerHand[1].CardFaceUp = true;
+            }
+            PlayerListBox.ItemsSource = PlayerList;
+            PlayerListBox.SelectedIndex = 0;
+            CurrentPlayerLabel.Content = PlayerList[PlayerListBox.SelectedIndex].Name + "'s Trun";
         }
-        private void ChangeTurn()
+        private void NewDealer()
         {
-            //PlayerListBox.SelectedIndex = counter % turns;
-            CurrentPlayerLabel.Content = "Player " + (PlayerListBox.SelectedIndex + 1) + "'s Trun";
-        }
-        private void SplitButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void HitButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void StayButton_Click(object sender, RoutedEventArgs e)
-        {
-            TurnSelection.Visibility = Visibility.Collapsed;
-        }
-
-        private void BetSelectedButton_Click(object sender, RoutedEventArgs e)
-        {
-            //place in bet amount from BetAmount, 0=$1, 1=$5, 2=$10
-            //BetPanel.Visibility = Visibility.Collapsed;
-            //TurnSelection.Visibility = Visibility.Visible;
+            List<Card> EmptyCards = new List<Card>();
+            dealer = new BlackJackDealer(EmptyCards, 0);
+            blackJackDeck.dealerDraw(dealer, 2);
+            HouseCardList_ListBox.ItemsSource = null;
+            HouseCardList_ListBox.ItemsSource = dealer.DealerHand;
         }
         private void SetupPlayerVisibilityBlack(int numberOfPlayers)
         {
+
             player1Stats.Visibility = Visibility.Visible;
             player2Stats.Visibility = Visibility.Collapsed;
             player3Stats.Visibility = Visibility.Collapsed;
@@ -127,25 +133,632 @@ namespace Cardgames
                 player3Stats.Visibility = Visibility.Collapsed;
                 player4Stats.Visibility = Visibility.Collapsed;
                 player5Stats.Visibility = Visibility.Collapsed;
-            } else if (numberOfPlayers == 3)
+            }
+            else if (numberOfPlayers == 3)
             {
                 player2Stats.Visibility = Visibility.Visible;
                 player3Stats.Visibility = Visibility.Visible;
                 player4Stats.Visibility = Visibility.Collapsed;
                 player5Stats.Visibility = Visibility.Collapsed;
-            } else if (numberOfPlayers == 4)
+            }
+            else if (numberOfPlayers == 4)
             {
                 player2Stats.Visibility = Visibility.Visible;
                 player3Stats.Visibility = Visibility.Visible;
                 player4Stats.Visibility = Visibility.Visible;
                 player5Stats.Visibility = Visibility.Collapsed;
-            } else if (numberOfPlayers == 5)
+            }
+            else if (numberOfPlayers == 5)
             {
                 player2Stats.Visibility = Visibility.Visible;
                 player3Stats.Visibility = Visibility.Visible;
                 player4Stats.Visibility = Visibility.Visible;
                 player5Stats.Visibility = Visibility.Visible;
             }
+        }
+        private void TestingMethod()
+        {
+            PlayerList = new List<Player>();
+            List<Card> cards1 = new List<Card>();
+            List<Card> cards2 = new List<Card>();
+            List<Card> cards3 = new List<Card>();
+            List<Card> cards4 = new List<Card>();
+            List<Card> cards5 = new List<Card>();
+            List<Card> cardsDealer = new List<Card>();
+            cards1.Add(new Card(CardSuit.Clubs, CardValue.Ace, true));
+            cards1.Add(new Card(CardSuit.Spades, CardValue.Six, true));
+            cards2.Add(new Card(CardSuit.Clubs, CardValue.Two, true));
+            cards2.Add(new Card(CardSuit.Spades, CardValue.Queen, true));
+            cards3.Add(new Card(CardSuit.Clubs, CardValue.Jack, true));
+            cards3.Add(new Card(CardSuit.Hearts, CardValue.Ten, true));
+            cards4.Add(new Card(CardSuit.Spades, CardValue.Ten, true));
+            cards4.Add(new Card(CardSuit.Hearts, CardValue.King, true));
+            cards5.Add(new Card(CardSuit.Diamonds, CardValue.Three, true));
+            cards5.Add(new Card(CardSuit.Clubs, CardValue.Four, true));
+            cardsDealer.Add(new Card(CardSuit.Hearts, CardValue.Three, true));
+            cardsDealer.Add(new Card(CardSuit.Diamonds, CardValue.Four, true));
+
+            dealer = new BlackJackDealer(cardsDealer, 0);
+            HouseCardList_ListBox.ItemsSource = dealer.DealerHand;
+
+            PlayerList.Add(new Player("Player 1", cards1));
+            player1Bank.Content = PlayerList[0].PlayerBank;
+
+            if (NumberOfPlayers == 5)
+            {
+                PlayerList.Add(new Player("Player 2", cards2));
+                PlayerList.Add(new Player("Player 3", cards3));
+                PlayerList.Add(new Player("Player 4", cards4));
+                PlayerList.Add(new Player("Player 5", cards5));
+                player3Bank.Content = PlayerList[1].PlayerBank;
+                player3Bank.Content = PlayerList[2].PlayerBank;
+                player4Bank.Content = PlayerList[3].PlayerBank;
+                player5Bank.Content = PlayerList[4].PlayerBank;
+            }
+            else if (NumberOfPlayers == 4)
+            {
+                PlayerList.Add(new Player("Player 2", cards2));
+                PlayerList.Add(new Player("Player 3", cards3));
+                PlayerList.Add(new Player("Player 4", cards4));
+                player3Bank.Content = PlayerList[1].PlayerBank;
+                player3Bank.Content = PlayerList[2].PlayerBank;
+                player4Bank.Content = PlayerList[3].PlayerBank;
+            }
+            else if (NumberOfPlayers == 3)
+            {
+                PlayerList.Add(new Player("Player 2", cards2));
+                PlayerList.Add(new Player("Player 3", cards3));
+                player2Bank.Content = PlayerList[1].PlayerBank;
+                player3Bank.Content = PlayerList[2].PlayerBank;
+            }
+            else if (NumberOfPlayers == 2)
+            {
+                PlayerList.Add(new Player("Player 2", cards2));
+                player2Bank.Content = PlayerList[1].PlayerBank;
+            }
+            for (int i = 0; i < PlayerList.Count; i++)
+            {
+                blackJackDeck.playerDraw(PlayerList[i], 2);
+            }
+            for (int i = 0; i < PlayerList.Count; i++)
+            {
+                PlayerList[i].PlayerHand[0].CardFaceUp = false;
+                PlayerList[i].PlayerHand[1].CardFaceUp = true;
+            }
+            PlayerListBox.ItemsSource = PlayerList;
+            PlayerListBox.SelectedIndex = 0;
+            CurrentPlayerLabel.Content = PlayerList[PlayerListBox.SelectedIndex].Name + "'s Trun";
+        }
+        private void SetCardFaceStates()
+        {
+            for (int i = 0; i < NumberOfPlayers; i++)
+            {
+                PlayerList[i].PlayerHand[0].CardFaceUp = false;
+                PlayerList[i].PlayerHand[1].CardFaceUp = true;
+            }
+            dealer.DealerHand[0].CardFaceUp = false;
+            dealer.DealerHand[1].CardFaceUp = true;
+        }
+
+        //Turn Updateing and changes
+
+        private void UpdateBanks()
+        {
+            player1Bank.Content = PlayerList[0].PlayerBank;
+            if (NumberOfPlayers > 1)
+            {
+                player2Bank.Content = PlayerList[1].PlayerBank;
+            }
+            if (NumberOfPlayers > 2)
+            {
+                player3Bank.Content = PlayerList[2].PlayerBank;
+            }
+            if (NumberOfPlayers > 3)
+            {
+                player4Bank.Content = PlayerList[3].PlayerBank;
+            }
+            if (NumberOfPlayers > 4)
+            {
+                player5Bank.Content = PlayerList[4].PlayerBank;
+            }
+        }
+        private void UpdateCards()
+        {
+            int indexT = PlayerListBox.SelectedIndex;
+            PlayerListBox.ItemsSource = null;
+            PlayerListBox.ItemsSource = PlayerList;
+            PlayerListBox.SelectedIndex = indexT;
+            for (int i = 0; i < PlayerList.Count; i++)
+            {
+                for (int t = 0; t < PlayerList[i].PlayerHand.Count; t++)
+                {
+                    PlayerList[i].PlayerHand[t].CardFaceUp = true;
+                }
+            }
+            //PlayerListBox.ItemsSource = PlayerList;
+        }
+        private void UpDatePlayersPlaying()
+        { 
+            for(int i=0; i<NumberOfPlayers; i++)
+            {
+                if (PlayerList[i].PlayerBank <= -50)
+                {
+                    PlayerList[i].Playing = false;
+                }
+
+                if (!PlayerList[i].Playing && PlayerList[i].Name == "Player 1")
+                {
+                    player1Stats.Visibility = Visibility.Collapsed;
+                }
+                else if (!PlayerList[i].Playing && PlayerList[i].Name == "Player 2")
+                {
+                    player2Stats.Visibility = Visibility.Collapsed;
+                }
+                else if (!PlayerList[i].Playing && PlayerList[i].Name == "Player 3")
+                {
+                    player3Stats.Visibility = Visibility.Collapsed;
+                }
+                else if (!PlayerList[i].Playing && PlayerList[i].Name == "Player 4")
+                {
+                    player4Stats.Visibility = Visibility.Collapsed;
+                }
+                else if (!PlayerList[i].Playing && PlayerList[i].Name == "Player 5")
+                {
+                    player5Stats.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+        
+        private void NextMove()
+        {
+            SplitBox.Visibility = Visibility.Collapsed;
+            if (PlayerListBox.SelectedIndex == NumberOfPlayers-1)
+            {
+                NextPlayerButton.Content = "Continue";
+            }
+            else
+            {
+                NextPlayerButton.Content = "Next Player";
+            }
+
+            if (hasSplit && !onHand2)
+            {
+                onHand2 = true;
+                //Hand2Turn();
+            }
+            //Move on to next player
+            //if(all players have played then){
+            //TurnSelection.Visibility = Visibility.Collapsed;
+            //Call RoundEndCalculations()
+            //NextRoundPanel.Visibility = Visibility.Visible;}
+
+            else if (PlayerListBox.SelectedIndex < NumberOfPlayers-1)
+            {
+                //counter++;
+                UpdateCards();
+                TurnSelection.Visibility = Visibility.Collapsed;               
+                NextPlayerPanel.Visibility = Visibility.Visible;
+            }
+            //else if (counter == NumberOfPlayers)
+            //{ 
+            //    counter++;
+            //    UpdateCards();
+            //    DealerHandTurn();
+            //    //TurnSelection.Visibility = Visibility.Collapsed;
+            //    NextPlayerPanel.Visibility = Visibility.Visible;
+            //    NextPlayerButton.Visibility = Visibility.Collapsed;
+            //    NextRoundPanel.Visibility = Visibility.Visible;
+            //    PlayerCardDisplaySection.Visibility = Visibility.Collapsed;
+            //    PlayerSplitCardDisplaySection.Visibility = Visibility.Collapsed;
+            //}
+            else
+            {
+                TurnSelection.Visibility = Visibility.Collapsed;
+                DealerHandTurn();
+                UpdateCards();
+                RoundEndCalculations();
+                NextPlayerPanel.Visibility = Visibility.Visible;
+                NextPlayerButtonPanel.Visibility = Visibility.Collapsed;
+                NextRoundPanel.Visibility = Visibility.Visible;
+                PlayerCardDisplaySection.Visibility = Visibility.Collapsed;
+                PlayerSplitCardDisplaySection.Visibility = Visibility.Collapsed;
+                //counter = 0;
+            }
+        }
+        private void ChangePlayer()
+        {
+            //PlayerListBox.SelectedIndex = counter % turns;
+            PlayerSplitCardDisplaySection.Visibility = Visibility.Collapsed;
+            PlayerListBox.SelectedIndex = (PlayerListBox.SelectedIndex + 1) % NumberOfPlayers;
+            if (PlayerList[PlayerListBox.SelectedIndex].Playing)
+            {
+                CurrentPlayerLabel.Content = PlayerList[PlayerListBox.SelectedIndex].Name + "'s Turn";
+            }
+            else
+            {
+                ChangePlayer();
+            }
+        }
+        private void Hand1Turn()
+        {            
+            for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count; t++)
+            {
+                PlayerList[PlayerListBox.SelectedIndex].PlayerHand[t].CardFaceUp = true;
+            }
+            UpdateCards();
+
+            hasSplit = false;
+            onHand2 = false;
+            CheckForSplit();
+            PlayerList[PlayerListBox.SelectedIndex].PlayerHand[0].CardFaceUp = true;
+        }
+        private void DealerHandTurn()
+        {
+            dealer.DealerScore = HandScore(dealer.DealerHand);
+            while ( dealer.DealerScore < 17 && blackJackDeck.Cards.Count > 0)
+            {
+                //add to 
+                blackJackDeck.dealerDraw(dealer, 1);
+                dealer.DealerScore = HandScore(dealer.DealerHand);
+            }
+            for(int i=0; i < dealer.DealerHand.Count; i++)
+            {
+                dealer.DealerHand[i].CardFaceUp = true;
+            }
+            HouseCardList_ListBox.ItemsSource = null;
+            HouseCardList_ListBox.ItemsSource = dealer.DealerHand;
+            HouseCardList_ListBox.SelectedIndex = 0;
+            UpdateCards();
+        }
+
+        //Game Body Logic
+        private void RoundEndCalculations()
+        {
+            //figure out winning hands and update banks
+            for(int i=0; i<NumberOfPlayers; i++)
+            {
+                int score = HandScore(PlayerList[i].PlayerHand);
+                if (CheckForBust(score))
+                {
+                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
+                }
+                else if (CheckForFive(PlayerList[i].PlayerHand))
+                {
+                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 4);
+                }
+                else if (CheckForBlackjack(score))
+                {
+                    PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 3);
+                }
+                else
+                {
+                    if (score > dealer.DealerScore)
+                    {
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 2);
+                    }
+                    else if (score == dealer.DealerScore)
+                    {
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet);
+                    }
+                    else
+                    {
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
+                    }
+                }
+                
+                if (PlayerList[i].PlayerHand2.Count > 1)
+                {
+                    score = HandScore(PlayerList[i].PlayerHand2);
+                    if (CheckForBust(score))
+                    {
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
+                    }
+                    else if (CheckForFive(PlayerList[i].PlayerHand2))
+                    {
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 4);
+                    }
+                    else if (CheckForBlackjack(score))
+                    {
+                        PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 3);
+                    }
+                    else
+                    {
+                        if (score > dealer.DealerScore)
+                        {
+                            PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet * 2);
+                        }
+                        else if (score == dealer.DealerScore)
+                        {
+                            PlayerList[i].PlayerBank = PlayerList[i].PlayerBank + (PlayerList[i].Bet);
+                        }
+                        else
+                        {
+                            PlayerList[i].PlayerBank = PlayerList[i].PlayerBank - PlayerList[i].Bet;
+                        }
+                    }
+                }
+            }
+            UpdateBanks();
+        }
+        private bool CheckForFive(List<Card> hand)
+        {
+            if (hand.Count == 5)
+            {
+                CauseOfTurnEnd.Content = "Five Hand";
+                return true;
+            }
+            return false;
+        }
+        private bool CheckForBust(int score)
+        {
+            if (score > 21)
+            {
+                CauseOfTurnEnd.Content = "Hit Bust";
+                return true;
+            }
+            return false;
+        }
+        private bool CheckForBlackjack(int score)
+        {
+            if (score == 21)
+            {
+                CauseOfTurnEnd.Content = "Blackjack";
+                return true;
+            }
+            return false;
+        }
+        private int HandScore(List<Card> hand)
+        {
+            int score = 0;
+            int numOfAces = 0;
+            for (int i = 0; i < hand.Count; i++)
+            {
+                CardValue face = hand[i].FaceValue;
+                if(face == CardValue.Ace)
+                {
+                    numOfAces = numOfAces + 1;
+                    score = score + 11;
+                }
+                else if (face == CardValue.Two)
+                {
+                    score = score + 2;
+                }
+                else if (face == CardValue.Three)
+                {
+                    score = score + 3;
+                }
+                else if (face == CardValue.Four)
+                {
+                    score = score + 4;
+                }
+                else if (face == CardValue.Five)
+                {
+                    score = score + 5;
+                }
+                else if (face == CardValue.Six)
+                {
+                    score = score + 6;
+                }
+                else if (face == CardValue.Seven)
+                {
+                    score = score + 7;
+                }
+                else if (face == CardValue.Eight)
+                {
+                    score = score + 8;
+                }
+                else if (face == CardValue.Nine)
+                {
+                    score = score + 9;
+                }
+                else if (face == CardValue.Ten || face == CardValue.Jack || face == CardValue.Queen || face == CardValue.King)
+                {
+                    score = score + 10;
+                }
+                //else if ((int)hand[i].FaceValue == 1)
+                //{
+                //    numOfAces = numOfAces + 1;
+                //    score = score + 11;
+                //}
+                //else
+                //{
+                //    score = score + (int)hand[i].FaceValue+1;
+                //}
+            }
+            while (score > 21 && numOfAces > 0) 
+            {
+                score = score - 10;
+                numOfAces = numOfAces - 1;
+            }
+            HandPoints.Content = "Points: " + score;
+            return score;
+        }
+        private void CheckForSplit()
+        {
+            for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count; t++)
+            {
+                PlayerList[PlayerListBox.SelectedIndex].PlayerHand[t].CardFaceUp = true;
+            }
+
+            if (PlayerList[PlayerListBox.SelectedIndex].PlayerHand[0].FaceValue == PlayerList[PlayerListBox.SelectedIndex].PlayerHand[1].FaceValue)
+            {
+                SplitBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SplitBox.Visibility = Visibility.Collapsed;
+            }
+        }
+        private void CheckForGameOver()
+        {
+            //What would cause game over?
+        }
+
+        private void GameHasEnded()
+        {
+            GameOverPanel.Visibility = Visibility.Visible;
+        }
+        //Button Prompts
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void NextRoundButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Start a new round
+            //reset game material
+            blackJackDeck = new Deck();
+            //Deck, Hands, Bets to false
+            //counter = 0;
+            NewDealer();
+            UpDatePlayersPlaying();
+            //clear player hands
+            for(int i=0; i<NumberOfPlayers; i++)
+            {
+                if (PlayerList[i].Playing)
+                {
+                    PlayerList[i].PlayerHand = new List<Card>();
+                    PlayerList[i].PlayerHand2 = new List<Card>();
+                    PlayerList[i].Bet = 0;
+                }
+                blackJackDeck.playerDraw(PlayerList[i], 2);
+            }
+            SetCardFaceStates();
+            //visibilities
+            TurnSelection.Visibility = Visibility.Collapsed;
+            NextPlayerPanel.Visibility = Visibility.Collapsed;
+            NextRoundPanel.Visibility = Visibility.Collapsed;
+            NextPlayerButtonPanel.Visibility = Visibility.Visible;
+        PlayerCardDisplaySection.Visibility = Visibility.Visible;
+            PlayerSplitCardDisplaySection.Visibility = Visibility.Visible;
+            BetPanel.Visibility = Visibility.Visible;
+
+            PlayerListBox.SelectedIndex = NumberOfPlayers - 1;
+            ChangePlayer();
+        }
+
+        private void SplitButton_Click(object sender, RoutedEventArgs e)
+        {
+            SplitBox.Visibility = Visibility.Collapsed;
+            //set splitHand to true if using a bool
+            hasSplit = true;
+            //Execute split material
+            List<Card> hand2 = new List<Card>();
+            Card tempC = PlayerList[PlayerListBox.SelectedIndex].PlayerHand[1];
+            Card newCard = new Card(tempC.Suit, tempC.FaceValue, true);
+            hand2.Add(newCard);
+            PlayerList[PlayerListBox.SelectedIndex].PlayerHand.RemoveAt(1);
+            PlayerList[PlayerListBox.SelectedIndex].PlayerHand2 = hand2;
+            //add a face down card to both hands
+            //PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Add(<FaceDown card>);
+            blackJackDeck.playerDraw(PlayerList[PlayerListBox.SelectedIndex], 1);
+            PlayerList[PlayerListBox.SelectedIndex].PlayerHand2.Add(blackJackDeck.drawCard());
+
+            PlayerSplitCardDisplaySection.Visibility = Visibility.Visible;
+
+            for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count; t++)
+            {
+                PlayerList[PlayerListBox.SelectedIndex].PlayerHand[t].CardFaceUp = true;
+            }
+            //Modefie to create and call split variables
+        }
+        private void HitButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (blackJackDeck.Cards.Count > 0)
+            {
+                //Draw and Add a card to player
+                List<Card> hand = new List<Card>();
+                if (onHand2)
+                {
+                    //add new card to 
+                    HitButton.Content = "Hit on Split";
+                    PlayerList[PlayerListBox.SelectedIndex].PlayerHand2.Add(blackJackDeck.drawCard());
+                    hand = PlayerList[PlayerListBox.SelectedIndex].PlayerHand2;
+                    for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand2.Count; t++)
+                    {
+                        PlayerList[PlayerListBox.SelectedIndex].PlayerHand2[t].CardFaceUp = true;
+                    }
+                }
+                else
+                {
+                    HitButton.Content = "Hit";
+                    //add new card to 
+                    blackJackDeck.playerDraw(PlayerList[PlayerListBox.SelectedIndex], 1);
+                    //PlayerList[PlayerListBox.SelectedIndex].PlayerHand[PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count].CardFaceUp = true;
+                    hand = PlayerList[PlayerListBox.SelectedIndex].PlayerHand;
+                    for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count; t++)
+                    {
+                        PlayerList[PlayerListBox.SelectedIndex].PlayerHand[t].CardFaceUp = true;
+                    }
+                }
+                SetCardFaceStates();
+                UpdateCards();
+                //Check for should turn end
+                int score = HandScore(hand);
+                if (CheckForBust(score) || CheckForFive(hand) || CheckForBlackjack(score))
+                {
+                    //end turn due to meeting a known end hand
+                    NextMove();
+                }
+            }
+            else
+            {
+                CauseOfTurnEnd.Content = "We ran out of cards, Sorry";
+                TurnSelection.Visibility = Visibility.Collapsed;
+                DealerHandTurn();
+                UpdateCards();
+                RoundEndCalculations();
+                NextRoundPanel.Visibility = Visibility.Visible;
+                PlayerCardDisplaySection.Visibility = Visibility.Collapsed;
+                PlayerSplitCardDisplaySection.Visibility = Visibility.Collapsed;
+                //counter = 0;
+            }
+        }
+        private void StayButton_Click(object sender, RoutedEventArgs e)
+        {
+            CauseOfTurnEnd.Content = "Stayed";
+            NextMove();
+        }
+
+        private void BetSelectedButton_Click(object sender, RoutedEventArgs e)
+        {
+            //place in bet amount from BetAmount, 0=$1, 1=$5, 2=$10
+            //Move to next player's bet
+            //if(all players have placed a bet then){
+            //BetPanel.Visibility = Visibility.Collapsed;
+            //TurnSelection.Visibility = Visibility.Visible;}
+            if (PlayerListBox.SelectedIndex < NumberOfPlayers-1)
+            {
+                //ChangeTurn();
+                int amount = BetAmount.SelectedIndex;
+                PlayerList[PlayerListBox.SelectedIndex].Bet = (amount == 0) ? 1 : (amount * 5);
+                //counter++;
+                BetAmount.SelectedIndex = 0;
+            }
+            else
+            {
+                UpdateCards();
+                BetPanel.Visibility = Visibility.Collapsed;
+                TurnSelection.Visibility = Visibility.Visible;
+                //counter = 1;
+            }
+            ChangePlayer();
+        }
+
+        private void ReturnToMenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWin = new MainWindow();
+            mainWin.Show();
+            this.Close();
+        }
+
+        private void NextPlayerButton_Click(object sender, RoutedEventArgs e)
+        {
+            NextPlayerPanel.Visibility = Visibility.Collapsed;
+            TurnSelection.Visibility = Visibility.Visible;
+            ChangePlayer();
+            Hand1Turn();
         }
     }
 }

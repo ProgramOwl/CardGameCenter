@@ -73,13 +73,13 @@ namespace Cardgames
         private void StartBlackJackButton_Click(object sender, RoutedEventArgs e)
         {
             int number = AmountOfPlayersBlack.SelectedIndex+1;
-            blackJackWindow.StartGame(number);
+            blackJackWindow.Setup(number);
             blackJackWindow.Show();
             this.Close();
             //call to page
         }
         public void DeckFillTest()
-         {
+        {
              Deck deck = new Deck();
         }
 }

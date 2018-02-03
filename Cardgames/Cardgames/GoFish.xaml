@@ -141,60 +141,39 @@
                     <Label Content="Player 1" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Points:" Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player1Points" Content="{Binding ElementName=PlayerListBox[0], Path=GoFishCounter}" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player1Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player2Stats" Orientation="Vertical">
                     <Label Content="Player 2" Style="{StaticResource PlayerStyle}"/>
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" >
                         <Label Content="Points:" Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player2Points" Content="{Binding ElementName=PlayerListBox[1], Path=GoFishCounter}" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player2Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player3Stats" Orientation="Vertical">
                     <Label Content="Player 3" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal" >
                         <Label Content="Points: " Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player3Points" Content="{Binding ElementName=PlayerListBox[2], Path=GoFishCounter}" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player3Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel x:Name="player4Stats" Orientation="Vertical">
                     <Label Content="Player 4" Style="{StaticResource PlayerStyle}"/>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Points: " Style="{StaticResource PlayerInfoStyle}"/>
-                        <Label x:Name="player4Points" Content="{Binding ElementName=PlayerListBox[3], Path=GoFishCounter}" Style="{StaticResource PlayerInfoStyle}"/>
+                        <Label x:Name="player4Points" Content="0" Style="{StaticResource PlayerInfoStyle}"/>
                     </StackPanel>
                 </StackPanel>
-                <ListBox x:Name="PlayerListBox" Visibility="Collapsed" ScrollViewer.CanContentScroll="False"
-                     SelectionMode="Extended" Width="100" Height="50" Background="Blue" SelectedIndex="0">
-                    <!--<ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Border BorderBrush="BlanchedAlmond" 
-                            BorderThickness="3" Width="165" Background="Silver">
-                                <StackPanel>
-                                    <Label FontSize="14" Foreground="Black"
-                                            FontWeight="Bold"
-                                            Content="{Binding Name}"/>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Label FontSize="14" Foreground="NavajoWhite"
-                                            FontWeight="Light"
-                                            Content="Group: "/>
-                                        <Label FontSize="14" Foreground="White"
-                                            FontWeight="Light"
-                                            Content="{Binding Group}"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>-->
-                </ListBox>
+                <ListBox x:Name="PlayerListBox" Visibility="Collapsed" ScrollViewer.CanContentScroll="False" SelectionMode="Single" Width="100" Height="50" Background="Blue" SelectedIndex="0"/>
             </StackPanel>
             <!--MainArea-->
             <StackPanel Grid.Column="1" x:Name="Main">
                 <!--Turn Controls-->
                 <StackPanel Grid.Row="0" x:Name="ControlPanel">
                     <StackPanel Background="Black">
-                        <Label x:Name="CurrentPlayerLabel"  Style="{StaticResource TitleStyle}" Content="Player #'s Turn"/>
+                        <Label x:Name="CurrentPlayerLabel"  Style="{StaticResource TitleStyle}"/>
+                        <!--Content="{Binding ElementName=PlayerListBox, Path=SelectedItem.Name}"/>-->
                     </StackPanel>
                     <StackPanel x:Name="TurnOptions" VerticalAlignment="Top" HorizontalAlignment="Center">
                         <StackPanel x:Name="CardSelector" Orientation="Horizontal" 
@@ -235,9 +214,9 @@
                         <Label x:Name="activePlayerLabel" Style="{StaticResource TitleStyle}">Your Cards</Label>
                     </StackPanel>
                     <Viewbox>
-                    <StackPanel x:Name="ActiveCards" HorizontalAlignment="Left" Margin="5"
+                        <StackPanel x:Name="ActiveCards" HorizontalAlignment="Left" Margin="5"
                                     Visibility="Visible" Background="Transparent" Orientation="Horizontal">
-                        <!--ScrollViewer.HorizontalScrollMode="Enabled"-->
+                            <!--ScrollViewer.HorizontalScrollMode="Enabled"-->
 
                             <ListBox x:Name="CardList_ListBox" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" MinHeight="252" Width="840" ScrollViewer.IsDeferredScrollingEnabled="False"
                      SelectionMode="Single" Background="{StaticResource HoverGreen}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
@@ -260,6 +239,7 @@
                     </Viewbox>
                 </StackPanel>
             </StackPanel>
+            
             <!--CoverPanel-->
             <StackPanel Grid.Column="1" x:Name="CoverPanel" Visibility="Collapsed" Background="{StaticResource BlackBack}">
                 <StackPanel Margin="20">
@@ -267,6 +247,19 @@
                         <Button x:Name="NextPlayerButton" Content="Start Next Trun"
                                 Style="{StaticResource FormButtonStyle}" Width="150"
                                 Click="NextPlayerButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+            <!--GameOverPanel-->
+            <StackPanel Grid.Column="1" x:Name="GameOverPanel" Visibility="Collapsed" Background="{StaticResource BlackBack}">
+                <StackPanel Margin="20">
+                    <Label x:Name="WinnerLabel" Content="No Winner" FontSize="20" FontWeight="ExtraBold" 
+                           HorizontalContentAlignment="Center" Foreground="#8CA65F"/>
+                    <StackPanel Background="{StaticResource AluBack}" Width="150" Height="30" Margin="5">
+                        <Button x:Name="ReturnToMenuButton" Content="Return to Home"
+                                Style="{StaticResource FormButtonStyle}" Width="150"
+                                Click="ReturnToMenuButton_Click"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

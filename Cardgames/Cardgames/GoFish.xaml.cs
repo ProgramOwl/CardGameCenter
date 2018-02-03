@@ -320,6 +320,7 @@ namespace Cardgames
                 CardList_ListBox.SelectedIndex = 0;
                 UpDateOpponentSelector();
             }
+            CardList_ListBox.SelectedIndex = 0;
         }            
         private void UpDateOpponentSelector()
         {            
@@ -377,23 +378,7 @@ namespace Cardgames
                         if (isGameOver())
                         {
                             GameHasEnded();
-                        }
-                        if (PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count == 0) 
-                        {
-                            if (goFishDeck.Cards.Count > 0)
-                            {
-                                //goFishDeck.playerDraw(PlayerList[PlayerListBox.SelectedIndex], 1);
-                                for (int i = 0; i < 5; i++)
-                                {
-                                    if (goFishDeck.Cards.Count > 0)
-                                    {
-                                        PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Add(goFishDeck.drawCard());
-                                    }
-                                }
-                            }
-                            TurnChange();
-                            CoverPanel.Visibility = Visibility.Visible;
-                        }
+                        }                        
                     }
                     else
                     {
@@ -565,10 +550,6 @@ namespace Cardgames
 
         private void Updatescores()
         {
-            int indexT = PlayerListBox.SelectedIndex;
-            PlayerListBox.ItemsSource = null;
-            PlayerListBox.ItemsSource = PlayerList;
-            PlayerListBox.SelectedIndex = indexT;
             FindAndRemovePairs(PlayerListBox.SelectedIndex);
 
             player1Points.Content = PlayerList[0].GoFishCounter;
@@ -581,13 +562,48 @@ namespace Cardgames
             {
                 player4Points.Content = PlayerList[3].GoFishCounter;
             }
-            
+
+            for (int i = 0; i < NumberOfPlayers; i++)
+            {
+                for (int t = 0; t < PlayerList[i].PlayerHand.Count; t++)
+                {
+                    PlayerList[i].PlayerHand[t].CardFaceUp = true;
+                }
+            }
+            int indexT = PlayerListBox.SelectedIndex;
+            PlayerListBox.ItemsSource = null;
+            PlayerListBox.ItemsSource = PlayerList;
+            PlayerListBox.SelectedIndex = indexT;
+
             //PlayerListBox.ItemsSource = PlayerList;
         }
         private void GoFishTurnButton_Click(object sender, RoutedEventArgs e)
         {
             //Updatescores();
-            SingleTurn();
+            if (PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count == 0)
+            {
+                if (goFishDeck.Cards.Count > 0 && PlayerList[PlayerListBox.SelectedIndex].Playing)
+                {
+                    //goFishDeck.playerDraw(PlayerList[PlayerListBox.SelectedIndex], 1);
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (goFishDeck.Cards.Count > 0)
+                        {
+                            PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Add(goFishDeck.drawCard());
+                        }
+                    }
+                }
+                else
+                {
+                    PlayerList[PlayerListBox.SelectedIndex].Playing = false;
+                }
+                TurnChange();
+                CoverPanel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SingleTurn();
+            }
         }
 
         private void NextPlayerButton_Click(object sender, RoutedEventArgs e)

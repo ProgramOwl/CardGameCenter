@@ -334,16 +334,27 @@ namespace Cardgames
             {
                 //draw new card and add to hand, also check if it is a match
                 //goFishDeck.playerDraw((Player)PlayerList[PlayerListBox.SelectedIndex], 1);
-                Card drawnCard = goFishDeck.drawCard();//PlayerList[PlayerListBox.SelectedIndex].PlayerHand[PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count];
-                matched = (pickedCard.FaceValue == drawnCard.FaceValue);
-                if (matched)
+                if (goFishDeck.Cards.Count > 0)
                 {
-                    PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Remove(pickedCard);
+                    Card drawnCard = goFishDeck.drawCard();//PlayerList[PlayerListBox.SelectedIndex].PlayerHand[PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count];
+                    matched = (pickedCard.FaceValue == drawnCard.FaceValue);
+                    if (matched)
+                    {
+                        PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Remove(pickedCard);
+                    }
+                    else
+                    {
+                        PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Add(drawnCard);
+                    }
                 }
                 else
                 {
-                    PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Add(drawnCard);
+                   if(PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count == 0)
+                    {
+                        PlayerList[PlayerListBox.SelectedIndex].Playing = false;
+                    }
                 }
+               
             }
             if (!matched)
             {

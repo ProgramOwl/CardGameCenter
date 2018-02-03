@@ -23,9 +23,9 @@ namespace Cardgames.Classes
             CardSuit[] suits = (CardSuit[])Enum.GetValues(typeof(CardSuit));
             Card tempCard;
             int cardNumber = 0;
-            for(int i = 0; i < suits.Length-1; i++)
+            for(int i = 0; i < suits.Length; i++)
             {
-                for(int j = 0; j < ranks.Length-1; j++)
+                for(int j = 0; j < ranks.Length; j++)
                 {
                     tempCard = new Card(suits[i], ranks[j], false);
                     cards.Add(tempCard);

@@ -37,6 +37,7 @@ namespace Cardgames
         public Blackjack()
         {
             InitializeComponent();
+            HandPoints.Visibility = Visibility.Collapsed;
         }
         //Inialization_Setup
         public void Setup(int players)
@@ -392,23 +393,26 @@ namespace Cardgames
             }
         }
         private void Hand1Turn()
-        {  
-            for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count; t++)
-            {
-                PlayerList[PlayerListBox.SelectedIndex].PlayerHand[t].CardFaceUp = true;
-            }
+        {
+            hasSplit = false;
+            onHand2 = false;
+            //for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count; t++)
+            //{
+            //    PlayerList[PlayerListBox.SelectedIndex].PlayerHand[t].CardFaceUp = true;
+            //}
             int score = HandScore(PlayerList[PlayerListBox.SelectedIndex].PlayerHand);
             if (CheckForBlackjack(score, PlayerList[PlayerListBox.SelectedIndex].PlayerHand))
             {
                 //end turn due to meeting a known end hand
                 NextMove();
             }
+            else
+            {
+                CheckForSplit();
+                PlayerList[PlayerListBox.SelectedIndex].PlayerHand[0].CardFaceUp = true;
+            }
             UpdateCards();
-
-            hasSplit = false;
-            onHand2 = false;
-            CheckForSplit();
-            PlayerList[PlayerListBox.SelectedIndex].PlayerHand[0].CardFaceUp = true;
+            
         }
         private void PlayOneCard()
         {
@@ -670,7 +674,7 @@ namespace Cardgames
                 score = score - 10;
                 numOfAces = numOfAces - 1;
             }
-            HandPoints.Content = "Points: " + score;
+            //HandPoints.Content = "Points: " + score;
             return score;
         }
         private int DealerHandScore(List<Card> hand)
@@ -876,23 +880,23 @@ namespace Cardgames
             //BetPanel.Visibility = Visibility.Collapsed;
             //TurnSelection.Visibility = Visibility.Visible;}
             
-            if (countB < NumberOfPlayers-1)
+            if (countB < NumberOfPlayers)
             {
                 //ChangeTurn();
-                countB++;
                 int amount = BetAmount.SelectedIndex;
-                PlayerList[PlayerListBox.SelectedIndex].Bet = (amount == 0) ? 1 : (amount * 5);
+                PlayerList[PlayerListBox.SelectedIndex].Bet = (amount == 0) ? 1 : amount ==1? 5: 10;
                 //counter++;
+                countB++;
                 BetAmount.SelectedIndex = 0;
+                ChangePlayer();
             }
-            else
+            if(countB==NumberOfPlayers)
             {
                 UpdateCards();
                 BetPanel.Visibility = Visibility.Collapsed;
                 TurnSelection.Visibility = Visibility.Visible;
                 //counter = 1;
             }
-            ChangePlayer();
         }
 
         private void ReturnToMenuButton_Click(object sender, RoutedEventArgs e)

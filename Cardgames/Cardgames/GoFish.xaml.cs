@@ -40,6 +40,7 @@ namespace Cardgames
             NumberOfPlayers = playerAmounts;
             PlayerList = new List<Player>();
             goFishDeck = new Deck();
+            Console.WriteLine("Deck has: ", goFishDeck.Cards.Count);
             
             SetupPlayerVisibilityGo(NumberOfPlayers);
             SetupOpponentSelector(NumberOfPlayers);

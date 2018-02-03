@@ -65,7 +65,7 @@ namespace Cardgames
             //return 
             //new GoFish {DataContext=number}.Show();
 
-            goFishWindow.Setup(number);
+            goFishWindow.Setup();
             goFishWindow.Show();
             this.Close();
         }

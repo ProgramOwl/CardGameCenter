@@ -11,12 +11,12 @@ namespace Cardgames
     {
         public string Name { get; set; }
         public List<Card> DealerHand { get; set; }
-        public int DealerScore { get; set; }
-        public BlackJackDealer(List<Card> hand, int dScore)
+        public List<Card> DealerHand2 { get; set; }
+        public BlackJackDealer(List<Card> hand, List<Card> hand2)
         {
             Name = "Dealer";
             DealerHand = hand;
-            DealerScore = dScore;
+            DealerHand2 = hand2;
         }
     }
 }

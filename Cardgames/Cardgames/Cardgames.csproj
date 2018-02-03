@@ -189,5 +189,11 @@
     <Resource Include="Images\Cards\Spade12.png" />
     <Resource Include="Images\Cards\Spade13.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\Club\" />
+    <Folder Include="Images\Diamond\" />
+    <Folder Include="Images\Heart\" />
+    <Folder Include="Images\Spade\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

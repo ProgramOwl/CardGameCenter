@@ -275,7 +275,13 @@ namespace Cardgames
                     if (goFishDeck.Cards.Count > 0)
                     {
                         //goFishDeck.playerDraw(PlayerList[PlayerListBox.SelectedIndex], 1);
-                        PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Add(goFishDeck.drawCard());
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (goFishDeck.Cards.Count > 0)
+                            {
+                                PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Add(goFishDeck.drawCard());
+                            }
+                        }
                     }
                     TurnChange();
                     CoverPanel.Visibility = Visibility.Visible;
@@ -341,6 +347,26 @@ namespace Cardgames
                     if (matched)
                     {
                         PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Remove(pickedCard);
+                        if (isGameOver())
+                        {
+                            GameHasEnded();
+                        }
+                        if (PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count == 0) 
+                        {
+                            if (goFishDeck.Cards.Count > 0)
+                            {
+                                //goFishDeck.playerDraw(PlayerList[PlayerListBox.SelectedIndex], 1);
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    if (goFishDeck.Cards.Count > 0)
+                                    {
+                                        PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Add(goFishDeck.drawCard());
+                                    }
+                                }
+                            }
+                            TurnChange();
+                            CoverPanel.Visibility = Visibility.Visible;
+                        }
                     }
                     else
                     {
@@ -350,15 +376,16 @@ namespace Cardgames
                 else
                 {
                    if(PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count == 0)
-                    {
+                   {
                         PlayerList[PlayerListBox.SelectedIndex].Playing = false;
-                    }
-                }
-               
+                   }
+                }               
             }
+
             if (!matched)
             {
                 CoverPanel.Visibility = Visibility.Visible;
+                TurnChange();
             }
             else
             {
@@ -539,7 +566,7 @@ namespace Cardgames
         private void NextPlayerButton_Click(object sender, RoutedEventArgs e)
         {
             //set player to next
-            TurnChange();
+            //TurnChange();
             CoverPanel.Visibility = Visibility.Collapsed;
         }
 

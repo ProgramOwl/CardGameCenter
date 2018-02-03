@@ -288,6 +288,11 @@
                             <Button x:Name="NextRoundButton" Content="Move on to next Round" Width="250" Height="30"
                                 Style="{StaticResource FormButtonStyle}" Click="NextRoundButton_Click"/>
                         </StackPanel>
+                        <StackPanel Background="{StaticResource AluBack}" Width="150" Height="30" Margin="5">
+                            <Button x:Name="ReturnToMenuButton" Content="Return to Home"
+                                Style="{StaticResource FormButtonStyle}" Width="150"
+                                Click="ReturnToMenuButton_Click"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
                 <!--Player's Hand-->
@@ -342,7 +347,7 @@
             <StackPanel Grid.Column="1" x:Name="GameOverPanel" Visibility="Collapsed" Background="{StaticResource BlackBack}">
                 <StackPanel Margin="20">
                     <StackPanel Background="{StaticResource AluBack}" Width="150" Height="30" Margin="5">
-                        <Button x:Name="ReturnToMenuButton" Content="Return to Home"
+                        <Button x:Name="ReturnToMenuButtonForced" Content="Return to Home"
                                 Style="{StaticResource FormButtonStyle}" Width="150"
                                 Click="ReturnToMenuButton_Click"/>
                     </StackPanel>

@@ -194,7 +194,6 @@
                         </StackPanel>
                         <StackPanel x:Name="TurnSelection" Visibility="Collapsed">
                             <Label Content="Pick a move:" Style="{StaticResource BasicTextStyle}" Margin="2"/>
-                            <Label x:Name="HandPoints"  Content="Points" Style="{StaticResource BasicTextStyle}" Margin="2"/>
                             <StackPanel Orientation="Vertical">                                
                                 <StackPanel Background="{StaticResource AluBack}" Width="120" Height="30" Margin="2">
                                     <Button x:Name="HitButton" Content="Hit"
@@ -303,6 +302,10 @@
                 <StackPanel Grid.Row="1" x:Name="PlayerCardDisplaySection">
                     <StackPanel Background="Black">
                         <Label x:Name="activePlayerLabel" Style="{StaticResource TitleStyle}">Your Cards</Label>
+                    </StackPanel>
+                    <StackPanel x:Name="HandPointsPanel" Orientation="Horizontal">
+                        <Label Content="Points:" Style="{StaticResource BasicTextStyle}" Margin="0"/>
+                        <Label x:Name="HandPoints"  Content="##" Style="{StaticResource BasicTextStyle}" Margin="0"/>
                     </StackPanel>
                     <Viewbox>
                         <StackPanel x:Name="ActiveCards" HorizontalAlignment="Left" Margin="5"

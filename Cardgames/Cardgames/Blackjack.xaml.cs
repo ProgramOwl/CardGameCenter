@@ -37,7 +37,7 @@ namespace Cardgames
         public Blackjack()
         {
             InitializeComponent();
-            HandPoints.Visibility = Visibility.Collapsed;
+            HandPointsPanel.Visibility = Visibility.Collapsed;
         }
         //Inialization_Setup
         public void Setup(int players)
@@ -51,7 +51,7 @@ namespace Cardgames
             StartGame(NumberOfPlayers);
             //After handing players cards
             //UpdateBanks();
-            //FaceDownFirstCard();
+            SetCardFaceStates();
         }
         public void StartGame(int players)
         {
@@ -333,11 +333,21 @@ namespace Cardgames
 
             if (hasSplit && !onHand2)
             {
-                TurnSelection.Visibility = Visibility.Visible;
-                HitButton.Content = "Hit on Split";
-                onHand2 = true;
-                UpdateCards();
-                //Hand2Turn();
+                int score = HandScore(PlayerList[PlayerListBox.SelectedIndex].PlayerHand);
+                if (CheckForBlackjack(score, PlayerList[PlayerListBox.SelectedIndex].PlayerHand))
+                {
+                    //end turn due to meeting a known end hand
+                    NextMove();
+                }
+                else
+                {
+                    HandScore(PlayerList[PlayerListBox.SelectedIndex].PlayerHand2);
+                    TurnSelection.Visibility = Visibility.Visible;
+                    HitButton.Content = "Hit on Split";
+                    onHand2 = true;
+                    UpdateCards();
+                    //Hand2Turn();
+                }
             }
             //Move on to next player
             //if(all players have played then){
@@ -348,9 +358,19 @@ namespace Cardgames
             else if (countT < NumberOfPlayers-1)
             {
                 countT++;
-                UpdateCards();
-                TurnSelection.Visibility = Visibility.Collapsed;               
-                NextPlayerPanel.Visibility = Visibility.Visible;
+                int score = HandScore(PlayerList[PlayerListBox.SelectedIndex].PlayerHand);
+                if (CheckForBlackjack(score, PlayerList[PlayerListBox.SelectedIndex].PlayerHand))
+                {
+                    //end turn due to meeting a known end hand
+                    NextMove();
+                }
+                else
+                {
+                    HandScore(PlayerList[PlayerListBox.SelectedIndex].PlayerHand);
+                    UpdateCards();
+                    TurnSelection.Visibility = Visibility.Collapsed;
+                    NextPlayerPanel.Visibility = Visibility.Visible;
+                }
             }
             //else if (counter == NumberOfPlayers)
             //{ 
@@ -396,6 +416,8 @@ namespace Cardgames
         {
             hasSplit = false;
             onHand2 = false;
+            PlayerList[PlayerListBox.SelectedIndex].PlayerHand[0].CardFaceUp = true;
+            UpdateCards();
             //for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count; t++)
             //{
             //    PlayerList[PlayerListBox.SelectedIndex].PlayerHand[t].CardFaceUp = true;
@@ -409,9 +431,7 @@ namespace Cardgames
             else
             {
                 CheckForSplit();
-                PlayerList[PlayerListBox.SelectedIndex].PlayerHand[0].CardFaceUp = true;
             }
-            UpdateCards();
             
         }
         private void PlayOneCard()
@@ -421,29 +441,38 @@ namespace Cardgames
             if (onHand2)
             {
                 //add new card to 
-                HitButton.Content = "Hit to Split";
-                PlayerList[PlayerListBox.SelectedIndex].PlayerHand2.Add(blackJackDeck.drawCard());
                 hand = PlayerList[PlayerListBox.SelectedIndex].PlayerHand2;
-                for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand2.Count; t++)
+                int score2 = HandScore(hand);
+                if (!CheckForBlackjack(score2, hand))
                 {
-                    PlayerList[PlayerListBox.SelectedIndex].PlayerHand2[t].CardFaceUp = true;
+                    HitButton.Content = "Hit to Split";
+                    PlayerList[PlayerListBox.SelectedIndex].PlayerHand2.Add(blackJackDeck.drawCard());
+                    hand = PlayerList[PlayerListBox.SelectedIndex].PlayerHand2;
+                    for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand2.Count; t++)
+                    {
+                        PlayerList[PlayerListBox.SelectedIndex].PlayerHand2[t].CardFaceUp = true;
+                    }
+                    //HandScore(PlayerList[PlayerListBox.SelectedIndex].PlayerHand2);
                 }
-                HandScore(PlayerList[PlayerListBox.SelectedIndex].PlayerHand2);
             }
             else
             {
                 HitButton.Content = "Hit";
-                //add new card to 
-                blackJackDeck.playerDraw(PlayerList[PlayerListBox.SelectedIndex], 1);
-                //PlayerList[PlayerListBox.SelectedIndex].PlayerHand[PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count].CardFaceUp = true;
                 hand = PlayerList[PlayerListBox.SelectedIndex].PlayerHand;
-                for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count; t++)
+                int score2 = HandScore(hand);
+                if (!CheckForBlackjack(score2, hand))
                 {
-                    PlayerList[PlayerListBox.SelectedIndex].PlayerHand[t].CardFaceUp = true;
-                }
+                    //add new card to 
+                    blackJackDeck.playerDraw(PlayerList[PlayerListBox.SelectedIndex], 1);
+                    //PlayerList[PlayerListBox.SelectedIndex].PlayerHand[PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count].CardFaceUp = true;
+                    hand = PlayerList[PlayerListBox.SelectedIndex].PlayerHand;
+                    for (int t = 0; t < PlayerList[PlayerListBox.SelectedIndex].PlayerHand.Count; t++)
+                    {
+                        PlayerList[PlayerListBox.SelectedIndex].PlayerHand[t].CardFaceUp = true;
+                    }
+                }                
             }
-
-            SetCardFaceStates();
+            
             UpdateCards();
             //Check for should turn end
             int score = HandScore(hand);
@@ -595,7 +624,7 @@ namespace Cardgames
         }
         private bool CheckForBlackjack(int score, List<Card> hand)
         {
-            if (score == 21 && hand.Count==2)
+            if (score == 21 && hand.Count == 2)
             {
                 CauseOfTurnEnd.Content = "Blackjack";
                 return true;
@@ -674,7 +703,7 @@ namespace Cardgames
                 score = score - 10;
                 numOfAces = numOfAces - 1;
             }
-            //HandPoints.Content = "Points: " + score;
+            HandPoints.Content = score;
             return score;
         }
         private int DealerHandScore(List<Card> hand)
@@ -805,6 +834,7 @@ namespace Cardgames
             }
             SetCardFaceStates();
             //visibilities
+            HandPointsPanel.Visibility = Visibility.Collapsed;
             TurnSelection.Visibility = Visibility.Collapsed;
             NextPlayerPanel.Visibility = Visibility.Collapsed;
             NextRoundPanel.Visibility = Visibility.Collapsed;
@@ -844,6 +874,7 @@ namespace Cardgames
             {
                 PlayerList[PlayerListBox.SelectedIndex].PlayerHand2[t].CardFaceUp = true;
             }
+
             UpdateCards();
             //Modefie to create and call split variables
         }
@@ -893,8 +924,11 @@ namespace Cardgames
             if(countB==NumberOfPlayers)
             {
                 UpdateCards();
+                HandPointsPanel.Visibility = Visibility.Visible;
                 BetPanel.Visibility = Visibility.Collapsed;
                 TurnSelection.Visibility = Visibility.Visible;
+                HandScore(PlayerList[PlayerListBox.SelectedIndex].PlayerHand);
+
                 //counter = 1;
             }
         }
